@@ -1,0 +1,882 @@
+<?xml version="1.0" encoding="UTF-8"?><root>
+	<!-- XML Icy Plugin -->
+					<url><![CDATA[https://icy.bioimageanalysis.org/xml-plugin/?id=464&version=3.2.2.0]]></url>
+		<name>Protocols</name>
+		<version>3.2.2.0</version>
+		<required_kernel_version>2.4.0.0</required_kernel_version>
+		<kernel_ver>2.4.0.0</kernel_ver>
+		<jar_url><![CDATA[https://icy.bioimageanalysis.org/download-file/?id=88842]]></jar_url>
+		<icon_url><![CDATA[https://icy.bioimageanalysis.org/wp-content/uploads/2016/12/icysoftware_icon-protocols.png]]></icon_url>
+		<image_url><![CDATA[https://icy.bioimageanalysis.org/wp-content/uploads/2016/12/icysoftware_tooltip-protocols.png]]></image_url>
+		<description><![CDATA[Design your own bioimage analysis workflow, graphically, and automate it on many images (batch processing).
+
+No programming knowledge required! Protocols can be shared and re-used straight from the Icy website.
+Watch this 30 minutes introduction to protocols during the NEUBIAS Academy @home webinar (go directly to 29:18 to skip the general introduction to Icy) and see the corresponding slides (whole webinar or protocol part only).]]></description>
+		<classname><![CDATA[plugins.adufour.protocols.Protocols]]></classname>
+				<author><![CDATA[adufour – Alexandre Dufour]]></author>
+		<authorlist>									
+	        				       					        
+		    	  
+			    <author><![CDATA[adufour – Alexandre Dufour]]></author>
+		    				       					        
+		    	  
+			    <author><![CDATA[stef – Stephane Dallongeville]]></author>
+		    					            				            
+        </authorlist>
+        		<changelog><![CDATA[-
+Version 3.2.2.0
+Date 2022-04-28 18:00:00
+
+- fixed a small issue on copy block operation (used in embedding)
+- small fix on dependencies
+- updated for Icy 2.4.0 (interruptible process)
+
+-
+Version 3.2.1.0
+Date 2021-11-02 17:00:00
+
+Fixed 'Call IJ Plugin' and 'Get Active Image Plus' blocks (regression)
+
+-
+Version 3.2.0.0
+Date 2021-08-31 18:00:00
+
+Added 'Output' variables which can be useful for interfacing within other applications / processes (data is accessible only from code though)
+
+-
+Version 3.1.2.0
+Date 2021-08-06 11:30:00
+
+Fixed Sequence File Batch block so it always load first series instead of asking for selection (remember that protocol is supposed to be run headless)
+
+-
+Version 3.1.1.0
+Date 2021-07-22 13:00:00
+
+Fixed / improved ImageJ blocks
+
+-
+Version 3.1.0.0
+Date 2020-12-03 18:20:00
+
+Merged Protocols SDK and Protocols plugins together (cyclic inter dependency).
+Easier for developers..
+
+-
+Version 3.0.12.1
+Date 2020-11-27 12:00:00
+
+Fixed missing dependency (JavaCL for a small graphical component)
+
+-
+Version 3.0.12.0
+Date 2020-09-15 16:45:00
+
+Fixed possible NPE on WorkFlowContainer.getBlockPanel() (regression from 3.0.10.0)
+
+-
+Version 3.0.11.0
+Date 2020-09-14 15:45:00
+
+Fixed NPE on simple protocol edition (regression from 3.0.10.0)
+
+-
+Version 3.0.10.0
+Date 2020-08-13 16:00:00
+
+Fixed exposed variables restoration when copy / pasting or embedding protocols...
+
+-
+Version 3.0.9.0
+Date 2020-06-17 12:20:00
+
+Fixed command line argument parsing when no in headless (interactive mode) so we could automatically load a protocol in Icy
+
+-
+Version 3.0.8.0
+Date 2020-04-06 17:00:00
+
+Minors improvements.
+
+-
+Version 3.0.7.0
+Date 2020-03-24 18:00:00
+
+Fixed some bugs on complex protocols loading (links missing..)
+
+-
+Version 3.0.6.0
+Date 2019-07-10 15:00:00
+
+fixed a bug with Java 12
+
+-
+Version 3.0.5.0
+Date 2019-05-20 16:00:00
+
+Run until here button doesn't change priority anymore (sometime we don't want it)
+
+-
+Version 3.0.4.0
+Date 2018-07-24 14:39:41
+
+Some GUI refresh optimizations
+
+-
+Version 3.0.3.0
+Date 2018-02-27 17:46:32
+
+Added Protocols.getInstance() method to retrieve Protocols main instance (can be useful !)
+
+-
+Version 3.0.2.0
+Date 2018-02-12 17:40:55
+
+Re introduced java 7 compatibility
+
+-
+Version 3.0.1.0
+Date 2017-02-24 16:59:15
+
+Fixed an issue in headless mode on Linux
+
+-
+Version 3.0.0.0
+Date 2017-02-06 12:22:13
+
+New: command-line support! Protocols can now be run directly from the command line, and arguments can be passed over to input blocks inside your protocols
+
+-
+Version 2.4.3.0
+Date 2016-06-13 12:03:54
+
+
+
+-
+Version 2.4.2.0
+Date 2016-05-27 10:58:08
+
+Fixed a bug that occurred when installing missing blocks on-the-fly while opening a protocol
+
+-
+Version 2.4.1.0
+Date 2015-12-17 23:32:24
+
+Fixed a graphical glitch when painting exposed links
+
+-
+Version 2.4.0.0
+Date 2015-12-17 23:22:37
+
+* Fixed the copy-paste system
+* Only a single Protocol can be used
+
+-
+Version 2.3.1.0
+Date 2015-04-30 17:49:49
+
+Fixed Block ID display for 3-digit numbers (yes, someone did break the century!)
+
+-
+Version 2.3.0.0
+Date 2015-03-18 00:11:34
+
+New: execution log panel next to each protocol (BETA)
+
+-
+Version 2.2.4.0
+Date 2015-01-29 16:18:34
+
+* Updated to SDK 4.4.5
+* Fixed display issues when loading protocols and drawing links
+
+-
+Version 2.2.3.0
+Date 2015-01-23 18:05:17
+
+Fixed an issue causing embedded block not to allow their variables to be exposed
+
+-
+Version 2.2.2.0
+Date 2015-01-23 17:53:27
+
+Attempting to fix a bug that is hard to find and reproduce...
+
+-
+Version 2.2.1.0
+Date 2014-12-19 13:05:08
+
+* Upgraded to SDK v.2.2.1
+* "Run until here" and "ID" buttons are back due to popular demand
+* "Run until here" option now guarantees block highest priority
+
+-
+Version 2.2.0.0
+Date 2014-12-11 13:31:09
+
+* Updated to SDK v.4.4
+* NEW: Protocols can now be opened directly by dropping ".protocol" files into Icy (just like images)
+* Revamped graphical user interface with all-in-one menu and status notification icon
+* Blocks can be removed using the backspace key
+* Loop: option to stop on first error
+
+-
+Version 2.1.6.0
+Date 2014-11-22 20:17:54
+
+* Updated to Protocols engine 4.3.0.0
+* The block search panel now includes developer information in the documentation panel.
+
+-
+Version 2.1.5.0
+Date 2014-10-06 19:59:19
+
+Fixed an issue when closing the Protocols window
+
+-
+Version 2.1.4.0
+Date 2014-10-05 18:18:16
+
+Fixed issue causing blocks not to collapse properly
+
+-
+Version 2.1.3.0
+Date 2014-09-15 21:57:07
+
+Bug fixes on protocol loading
+
+-
+Version 2.1.2.0
+Date 2014-09-12 17:40:05
+
+Fixed drag'n'drop for ".protocol" files
+
+-
+Version 2.1.1.0
+Date 2014-08-04 17:21:52
+
+Improved error handling, and fixed a few GUI glitches
+
+-
+Version 2.1.0.0
+Date 2014-07-24 19:16:43
+
+* Major code refactoring: better separation between the engine (Protocols SDK) and the graphical user interface (Protocols)
+* Fixed memory leak
+* Improved error and message handling
+* Fixed drag'n'drop operations not working on some systems
+
+-
+Version 2.0.6.0
+Date 2014-07-23 00:05:09
+
+Fixed the "cancel" button when closing the window
+
+-
+Version 2.0.5.0
+Date 2014-06-18 14:02:41
+
+Fixed a copy/paste issue within inner workflows
+
+-
+Version 2.0.4.0
+Date 2014-06-17 18:33:02
+
+Fixed an issue when copying links that contain an exposed variable (ignored for now)
+
+-
+Version 2.0.3.0
+Date 2014-06-17 14:45:14
+
+Improved graphical layout & block descriptions
+
+-
+Version 2.0.2.0
+Date 2014-05-21 19:15:51
+
+Update by Ludovic Laborde
+* Updated to Icy 1.5
+* Fixed drag'n'drop issue from the search bar
+
+-
+Version 2.0.1.0
+Date 2014-05-19 12:49:39
+
+Fixed bug when closing a protocol and saving it (would not re-open it afterwards)
+
+-
+Version 2.0.0.1
+Date 2014-05-18 20:03:52
+
+Updated jar file (line numbers did not match in bug reports)
+
+-
+Version 2.0.0.0
+Date 2014-05-16 21:21:18
+
+Update by Ludovic Laborde
+Integrated search bar: find your blocks fast and easily, insert them with a simple drag'n'drop operation.
+
+-
+Version 1.7.5.0
+Date 2014-05-12 20:36:21
+
+Fixed a bug causing the window closing operation not allowing to be cancelled
+
+-
+Version 1.7.4.0
+Date 2014-04-27 15:45:29
+
+Fixed the "save as" button
+
+-
+Version 1.7.3.0
+Date 2014-04-24 18:45:50
+
+* Removed "insert block" button from main interface (only accessible through right-click for the time being)
+* Adjusted tool bar and tool tips to be more explicit
+
+-
+Version 1.7.2.2
+Date 2014-01-27 13:56:44
+
+Customize error message when blocks cannot be installed via Icy4Eclipse
+
+-
+Version 1.7.2.1
+Date 2013-11-15 21:44:58
+
+Updated to Icy 1.4.2.0 (removed deprecated calls), no logic change
+
+-
+Version 1.7.2.0
+Date 2013-10-28 11:35:56
+
+* Reload the interface when a protocol is opened from disk *after* a plugin reload event
+* Describe the loading process with an announcement frame
+
+-
+Version 1.7.1.0
+Date 2013-10-14 17:33:05
+
+Online protocols are now downloaded to a new "protocols" subfolder inside Icy, so you can carry them with you at all times!
+
+-
+Version 1.7.0.0
+Date 2013-10-12 18:09:36
+
+Fixed multiple reloading issues:
+* The Protocols interface now reloads only when a protocol requires the installation of one or more new plugins.
+* Reloading now correctly preserves and reloads previous state. No more data loss
+
+-
+Version 1.6.0.0
+Date 2013-07-12 13:46:25
+
+New option to clean protocol results to save memory
+
+-
+Version 1.5.8.0
+Date 2013-07-12 13:33:36
+
+Screenshots saved along protocols now have an extra "_protocols" suffix to avoid name clashes
+
+-
+Version 1.5.7.0
+Date 2013-05-27 18:05:30
+
+* Fixed an issue causing all online protocols appearing in a search result to be downloaded locally (even if never used).
+* Selected protocols from the search bar are now downloaded to the default protocols folder
+
+-
+Version 1.5.6.0
+Date 2013-05-26 19:30:43
+
+Upgraded online protocol provider to the new kernel (should reduce server load)
+
+-
+Version 1.5.5.0
+Date 2013-05-18 23:39:41
+
+Updated to Icy 1.3.5.0 (removed deprecation calls)
+
+-
+Version 1.5.4.0
+Date 2013-03-25 09:13:05
+
+* Images dropped in protocols are now opened in Icy
+* Fixed an issue causing Protocols to reload properly when the class loader changes
+
+-
+Version 1.5.3.0
+Date 2013-03-22 14:35:36
+
+Fixed an issue causing Protocols to fail opening properly after Icy restarts
+
+-
+Version 1.5.2.0
+Date 2013-03-12 20:34:09
+
+Show an error message when opening a wrong XML file (rather than a bug report)
+
+-
+Version 1.5.1.0
+Date 2013-03-08 15:05:08
+
+Updated to Blocks v.2.4
+
+-
+Version 1.5.0.0
+Date 2013-02-28 19:58:29
+
+Protocols can now be searched and loaded directly from Icy's search bar!
+
+-
+Version 1.4.3.0
+Date 2013-01-07 13:05:25
+
+Fixed a memory leak (caused by the file drag'n'drop mechanism)
+
+-
+Version 1.4.2.0
+Date 2012-12-07 17:42:47
+
+Fixed memory leaks
+
+-
+Version 1.4.1.0
+Date 2012-11-07 17:16:58
+
+* NEW: the snapshot button has been removed from the interface; the snapshot is always saved alongside the xml file
+* Fixed minor drag'n'drop issue causing the interface border to disappear (the border is now no longer highlighted when dropping file(s))
+
+-
+Version 1.4.0.0
+Date 2012-11-07 16:53:00
+
+* NEW: Drag protocols directly into the Protocols interface
+* Minor interface fixes when quitting Icy
+
+-
+Version 1.3.2.0
+Date 2012-10-16 15:01:01
+
+Fixed loading bug (from 1.3.1.0)
+
+-
+Version 1.3.1.0
+Date 2012-10-15 16:57:28
+
+Static access to the main frame (allows launching a protocol from outside the interface)
+
+-
+Version 1.3.0.0
+Date 2012-09-27 15:50:55
+
+* Fixed support for live plugin loading/saving
+* Status bar indicates loading status
+
+-
+Version 1.2.0.0
+Date 2012-09-26 16:56:17
+
+Resubmit jar file
+
+-
+Version 1.1.2.3
+Date 2012-09-26 16:20:58
+
+* Updated to Blocks 1.8.0.0
+* New: the Protocols interface automatically saves its state and reloads when plugins are reloaded
+
+-
+Version 1.1.2.2
+Date 2012-09-06 16:28:32
+
+Updated to Blocks 1.7
+
+-
+Version 1.1.2.1
+Date 2012-09-03 14:58:47
+
+Improved error reporting (no logic change)
+
+-
+Version 1.1.2.0
+Date 2012-08-30 15:45:47
+
+Updated to Blocks engine 1.6: ability to stop a running protocol
+
+-
+Version 1.1.1.0
+Date 2012-08-07 18:52:01
+
+Updated to Blocks 1.5.0.0
+
+-
+Version 1.1.0.0
+Date 2012-08-03 12:03:49
+
+Fixed bug reporting issue (bugs were never sent by email)
+
+-
+Version 1.0.2.0
+Date 2012-07-11 18:07:43
+
+Snapshot feature restricts to the contents of the workflow
+
+-
+Version 1.0.1.0
+Date 2012-07-09 17:48:34
+
+- Improved file saving dialog (overwrite prompt, auto-add extension)
+- Fixed a few memory leaks
+
+-
+Version 1.0.0.0
+Date 2012-07-06 12:06:58
+
+First officially stable release !
+- Workflows can now be embedded into loops (useful for batch processing)
+
+-
+Version 0.9.9.2
+Date 2012-07-04 11:51:35
+
+Updated to Blocks 0.12
+
+-
+Version 0.9.9.1
+Date 2012-07-03 18:52:50
+
+Release Candidate 1:
+- Updated to Blocks 0.11.0.0
+- New status bar for each protocol
+- Removed "colorize links" button (true by default)
+- Collapse feature de-activated (will be improved in a later release)
+
+-
+Version 0.0.3.0
+Date 2012-06-29 19:07:58
+
+* Improved interface labels and access to menus and blocks.
+* added second status bar for future use to monitor a running process
+
+-
+Version 0.0.2.0
+Date 2012-06-28 17:17:11
+
+Added snapshot feature
+
+-
+Version 0.0.1.0
+Date 2012-06-22 14:11:11
+
+
+
+]]></changelog>
+		<changelogs>					<version>3.2.2.0</version>
+					<datetime>2022-04-28 18:00:00</datetime>
+					<description>- fixed a small issue on copy block operation (used in embedding)
+- small fix on dependencies
+- updated for Icy 2.4.0 (interruptible process)</description>
+										<version>3.2.1.0</version>
+					<datetime>2021-11-02 17:00:00</datetime>
+					<description>Fixed &#039;Call IJ Plugin&#039; and &#039;Get Active Image Plus&#039; blocks (regression)</description>
+										<version>3.2.0.0</version>
+					<datetime>2021-08-31 18:00:00</datetime>
+					<description>Added &#039;Output&#039; variables which can be useful for interfacing within other applications / processes (data is accessible only from code though)</description>
+										<version>3.1.2.0</version>
+					<datetime>2021-08-06 11:30:00</datetime>
+					<description>Fixed Sequence File Batch block so it always load first series instead of asking for selection (remember that protocol is supposed to be run headless)</description>
+										<version>3.1.1.0</version>
+					<datetime>2021-07-22 13:00:00</datetime>
+					<description>Fixed / improved ImageJ blocks</description>
+										<version>3.1.0.0</version>
+					<datetime>2020-12-03 18:20:00</datetime>
+					<description>Merged Protocols SDK and Protocols plugins together (cyclic inter dependency).
+Easier for developers..</description>
+										<version>3.0.12.1</version>
+					<datetime>2020-11-27 12:00:00</datetime>
+					<description>Fixed missing dependency (JavaCL for a small graphical component)</description>
+										<version>3.0.12.0</version>
+					<datetime>2020-09-15 16:45:00</datetime>
+					<description>Fixed possible NPE on WorkFlowContainer.getBlockPanel() (regression from 3.0.10.0)</description>
+										<version>3.0.11.0</version>
+					<datetime>2020-09-14 15:45:00</datetime>
+					<description>Fixed NPE on simple protocol edition (regression from 3.0.10.0)</description>
+										<version>3.0.10.0</version>
+					<datetime>2020-08-13 16:00:00</datetime>
+					<description>Fixed exposed variables restoration when copy / pasting or embedding protocols...</description>
+										<version>3.0.9.0</version>
+					<datetime>2020-06-17 12:20:00</datetime>
+					<description>Fixed command line argument parsing when no in headless (interactive mode) so we could automatically load a protocol in Icy</description>
+										<version>3.0.8.0</version>
+					<datetime>2020-04-06 17:00:00</datetime>
+					<description>Minors improvements.</description>
+										<version>3.0.7.0</version>
+					<datetime>2020-03-24 18:00:00</datetime>
+					<description>Fixed some bugs on complex protocols loading (links missing..)</description>
+										<version>3.0.6.0</version>
+					<datetime>2019-07-10 15:00:00</datetime>
+					<description>fixed a bug with Java 12</description>
+										<version>3.0.5.0</version>
+					<datetime>2019-05-20 16:00:00</datetime>
+					<description>Run until here button doesn&#039;t change priority anymore (sometime we don&#039;t want it)</description>
+										<version>3.0.4.0</version>
+					<datetime>2018-07-24 14:39:41</datetime>
+					<description>Some GUI refresh optimizations</description>
+										<version>3.0.3.0</version>
+					<datetime>2018-02-27 17:46:32</datetime>
+					<description>Added Protocols.getInstance() method to retrieve Protocols main instance (can be useful !)</description>
+										<version>3.0.2.0</version>
+					<datetime>2018-02-12 17:40:55</datetime>
+					<description>Re introduced java 7 compatibility</description>
+										<version>3.0.1.0</version>
+					<datetime>2017-02-24 16:59:15</datetime>
+					<description>Fixed an issue in headless mode on Linux</description>
+										<version>3.0.0.0</version>
+					<datetime>2017-02-06 12:22:13</datetime>
+					<description>New: command-line support! Protocols can now be run directly from the command line, and arguments can be passed over to input blocks inside your protocols</description>
+										<version>2.4.3.0</version>
+					<datetime>2016-06-13 12:03:54</datetime>
+					<description></description>
+										<version>2.4.2.0</version>
+					<datetime>2016-05-27 10:58:08</datetime>
+					<description>Fixed a bug that occurred when installing missing blocks on-the-fly while opening a protocol</description>
+										<version>2.4.1.0</version>
+					<datetime>2015-12-17 23:32:24</datetime>
+					<description>Fixed a graphical glitch when painting exposed links</description>
+										<version>2.4.0.0</version>
+					<datetime>2015-12-17 23:22:37</datetime>
+					<description>* Fixed the copy-paste system
+* Only a single Protocol can be used</description>
+										<version>2.3.1.0</version>
+					<datetime>2015-04-30 17:49:49</datetime>
+					<description>Fixed Block ID display for 3-digit numbers (yes, someone did break the century!)</description>
+										<version>2.3.0.0</version>
+					<datetime>2015-03-18 00:11:34</datetime>
+					<description>New: execution log panel next to each protocol (BETA)</description>
+										<version>2.2.4.0</version>
+					<datetime>2015-01-29 16:18:34</datetime>
+					<description>* Updated to SDK 4.4.5
+* Fixed display issues when loading protocols and drawing links</description>
+										<version>2.2.3.0</version>
+					<datetime>2015-01-23 18:05:17</datetime>
+					<description>Fixed an issue causing embedded block not to allow their variables to be exposed</description>
+										<version>2.2.2.0</version>
+					<datetime>2015-01-23 17:53:27</datetime>
+					<description>Attempting to fix a bug that is hard to find and reproduce...</description>
+										<version>2.2.1.0</version>
+					<datetime>2014-12-19 13:05:08</datetime>
+					<description>* Upgraded to SDK v.2.2.1
+* &quot;Run until here&quot; and &quot;ID&quot; buttons are back due to popular demand
+* &quot;Run until here&quot; option now guarantees block highest priority</description>
+										<version>2.2.0.0</version>
+					<datetime>2014-12-11 13:31:09</datetime>
+					<description>* Updated to SDK v.4.4
+* NEW: Protocols can now be opened directly by dropping &quot;.protocol&quot; files into Icy (just like images)
+* Revamped graphical user interface with all-in-one menu and status notification icon
+* Blocks can be removed using the backspace key
+* Loop: option to stop on first error</description>
+										<version>2.1.6.0</version>
+					<datetime>2014-11-22 20:17:54</datetime>
+					<description>* Updated to Protocols engine 4.3.0.0
+* The block search panel now includes developer information in the documentation panel.</description>
+										<version>2.1.5.0</version>
+					<datetime>2014-10-06 19:59:19</datetime>
+					<description>Fixed an issue when closing the Protocols window</description>
+										<version>2.1.4.0</version>
+					<datetime>2014-10-05 18:18:16</datetime>
+					<description>Fixed issue causing blocks not to collapse properly</description>
+										<version>2.1.3.0</version>
+					<datetime>2014-09-15 21:57:07</datetime>
+					<description>Bug fixes on protocol loading</description>
+										<version>2.1.2.0</version>
+					<datetime>2014-09-12 17:40:05</datetime>
+					<description>Fixed drag&#039;n&#039;drop for &quot;.protocol&quot; files</description>
+										<version>2.1.1.0</version>
+					<datetime>2014-08-04 17:21:52</datetime>
+					<description>Improved error handling, and fixed a few GUI glitches</description>
+										<version>2.1.0.0</version>
+					<datetime>2014-07-24 19:16:43</datetime>
+					<description>* Major code refactoring: better separation between the engine (Protocols SDK) and the graphical user interface (Protocols)
+* Fixed memory leak
+* Improved error and message handling
+* Fixed drag&#039;n&#039;drop operations not working on some systems</description>
+										<version>2.0.6.0</version>
+					<datetime>2014-07-23 00:05:09</datetime>
+					<description>Fixed the &quot;cancel&quot; button when closing the window</description>
+										<version>2.0.5.0</version>
+					<datetime>2014-06-18 14:02:41</datetime>
+					<description>Fixed a copy/paste issue within inner workflows</description>
+										<version>2.0.4.0</version>
+					<datetime>2014-06-17 18:33:02</datetime>
+					<description>Fixed an issue when copying links that contain an exposed variable (ignored for now)</description>
+										<version>2.0.3.0</version>
+					<datetime>2014-06-17 14:45:14</datetime>
+					<description>Improved graphical layout &amp; block descriptions</description>
+										<version>2.0.2.0</version>
+					<datetime>2014-05-21 19:15:51</datetime>
+					<description>Update by Ludovic Laborde
+* Updated to Icy 1.5
+* Fixed drag&#039;n&#039;drop issue from the search bar</description>
+										<version>2.0.1.0</version>
+					<datetime>2014-05-19 12:49:39</datetime>
+					<description>Fixed bug when closing a protocol and saving it (would not re-open it afterwards)</description>
+										<version>2.0.0.1</version>
+					<datetime>2014-05-18 20:03:52</datetime>
+					<description>Updated jar file (line numbers did not match in bug reports)</description>
+										<version>2.0.0.0</version>
+					<datetime>2014-05-16 21:21:18</datetime>
+					<description>Update by Ludovic Laborde
+Integrated search bar: find your blocks fast and easily, insert them with a simple drag&#039;n&#039;drop operation.</description>
+										<version>1.7.5.0</version>
+					<datetime>2014-05-12 20:36:21</datetime>
+					<description>Fixed a bug causing the window closing operation not allowing to be cancelled</description>
+										<version>1.7.4.0</version>
+					<datetime>2014-04-27 15:45:29</datetime>
+					<description>Fixed the &quot;save as&quot; button</description>
+										<version>1.7.3.0</version>
+					<datetime>2014-04-24 18:45:50</datetime>
+					<description>* Removed &quot;insert block&quot; button from main interface (only accessible through right-click for the time being)
+* Adjusted tool bar and tool tips to be more explicit</description>
+										<version>1.7.2.2</version>
+					<datetime>2014-01-27 13:56:44</datetime>
+					<description>Customize error message when blocks cannot be installed via Icy4Eclipse</description>
+										<version>1.7.2.1</version>
+					<datetime>2013-11-15 21:44:58</datetime>
+					<description>Updated to Icy 1.4.2.0 (removed deprecated calls), no logic change</description>
+										<version>1.7.2.0</version>
+					<datetime>2013-10-28 11:35:56</datetime>
+					<description>* Reload the interface when a protocol is opened from disk *after* a plugin reload event
+* Describe the loading process with an announcement frame</description>
+										<version>1.7.1.0</version>
+					<datetime>2013-10-14 17:33:05</datetime>
+					<description>Online protocols are now downloaded to a new &quot;protocols&quot; subfolder inside Icy, so you can carry them with you at all times!</description>
+										<version>1.7.0.0</version>
+					<datetime>2013-10-12 18:09:36</datetime>
+					<description>Fixed multiple reloading issues:
+* The Protocols interface now reloads only when a protocol requires the installation of one or more new plugins.
+* Reloading now correctly preserves and reloads previous state. No more data loss</description>
+										<version>1.6.0.0</version>
+					<datetime>2013-07-12 13:46:25</datetime>
+					<description>New option to clean protocol results to save memory</description>
+										<version>1.5.8.0</version>
+					<datetime>2013-07-12 13:33:36</datetime>
+					<description>Screenshots saved along protocols now have an extra &quot;_protocols&quot; suffix to avoid name clashes</description>
+										<version>1.5.7.0</version>
+					<datetime>2013-05-27 18:05:30</datetime>
+					<description>* Fixed an issue causing all online protocols appearing in a search result to be downloaded locally (even if never used).
+* Selected protocols from the search bar are now downloaded to the default protocols folder</description>
+										<version>1.5.6.0</version>
+					<datetime>2013-05-26 19:30:43</datetime>
+					<description>Upgraded online protocol provider to the new kernel (should reduce server load)</description>
+										<version>1.5.5.0</version>
+					<datetime>2013-05-18 23:39:41</datetime>
+					<description>Updated to Icy 1.3.5.0 (removed deprecation calls)</description>
+										<version>1.5.4.0</version>
+					<datetime>2013-03-25 09:13:05</datetime>
+					<description>* Images dropped in protocols are now opened in Icy
+* Fixed an issue causing Protocols to reload properly when the class loader changes</description>
+										<version>1.5.3.0</version>
+					<datetime>2013-03-22 14:35:36</datetime>
+					<description>Fixed an issue causing Protocols to fail opening properly after Icy restarts</description>
+										<version>1.5.2.0</version>
+					<datetime>2013-03-12 20:34:09</datetime>
+					<description>Show an error message when opening a wrong XML file (rather than a bug report)</description>
+										<version>1.5.1.0</version>
+					<datetime>2013-03-08 15:05:08</datetime>
+					<description>Updated to Blocks v.2.4</description>
+										<version>1.5.0.0</version>
+					<datetime>2013-02-28 19:58:29</datetime>
+					<description>Protocols can now be searched and loaded directly from Icy&#039;s search bar!</description>
+										<version>1.4.3.0</version>
+					<datetime>2013-01-07 13:05:25</datetime>
+					<description>Fixed a memory leak (caused by the file drag&#039;n&#039;drop mechanism)</description>
+										<version>1.4.2.0</version>
+					<datetime>2012-12-07 17:42:47</datetime>
+					<description>Fixed memory leaks</description>
+										<version>1.4.1.0</version>
+					<datetime>2012-11-07 17:16:58</datetime>
+					<description>* NEW: the snapshot button has been removed from the interface; the snapshot is always saved alongside the xml file
+* Fixed minor drag&#039;n&#039;drop issue causing the interface border to disappear (the border is now no longer highlighted when dropping file(s))</description>
+										<version>1.4.0.0</version>
+					<datetime>2012-11-07 16:53:00</datetime>
+					<description>* NEW: Drag protocols directly into the Protocols interface
+* Minor interface fixes when quitting Icy</description>
+										<version>1.3.2.0</version>
+					<datetime>2012-10-16 15:01:01</datetime>
+					<description>Fixed loading bug (from 1.3.1.0)</description>
+										<version>1.3.1.0</version>
+					<datetime>2012-10-15 16:57:28</datetime>
+					<description>Static access to the main frame (allows launching a protocol from outside the interface)</description>
+										<version>1.3.0.0</version>
+					<datetime>2012-09-27 15:50:55</datetime>
+					<description>* Fixed support for live plugin loading/saving
+* Status bar indicates loading status</description>
+										<version>1.2.0.0</version>
+					<datetime>2012-09-26 16:56:17</datetime>
+					<description>Resubmit jar file</description>
+										<version>1.1.2.3</version>
+					<datetime>2012-09-26 16:20:58</datetime>
+					<description>* Updated to Blocks 1.8.0.0
+* New: the Protocols interface automatically saves its state and reloads when plugins are reloaded</description>
+										<version>1.1.2.2</version>
+					<datetime>2012-09-06 16:28:32</datetime>
+					<description>Updated to Blocks 1.7</description>
+										<version>1.1.2.1</version>
+					<datetime>2012-09-03 14:58:47</datetime>
+					<description>Improved error reporting (no logic change)</description>
+										<version>1.1.2.0</version>
+					<datetime>2012-08-30 15:45:47</datetime>
+					<description>Updated to Blocks engine 1.6: ability to stop a running protocol</description>
+										<version>1.1.1.0</version>
+					<datetime>2012-08-07 18:52:01</datetime>
+					<description>Updated to Blocks 1.5.0.0</description>
+										<version>1.1.0.0</version>
+					<datetime>2012-08-03 12:03:49</datetime>
+					<description>Fixed bug reporting issue (bugs were never sent by email)</description>
+										<version>1.0.2.0</version>
+					<datetime>2012-07-11 18:07:43</datetime>
+					<description>Snapshot feature restricts to the contents of the workflow</description>
+										<version>1.0.1.0</version>
+					<datetime>2012-07-09 17:48:34</datetime>
+					<description>- Improved file saving dialog (overwrite prompt, auto-add extension)
+- Fixed a few memory leaks</description>
+										<version>1.0.0.0</version>
+					<datetime>2012-07-06 12:06:58</datetime>
+					<description>First officially stable release !
+- Workflows can now be embedded into loops (useful for batch processing)</description>
+										<version>0.9.9.2</version>
+					<datetime>2012-07-04 11:51:35</datetime>
+					<description>Updated to Blocks 0.12</description>
+										<version>0.9.9.1</version>
+					<datetime>2012-07-03 18:52:50</datetime>
+					<description>Release Candidate 1:
+- Updated to Blocks 0.11.0.0
+- New status bar for each protocol
+- Removed &quot;colorize links&quot; button (true by default)
+- Collapse feature de-activated (will be improved in a later release)</description>
+										<version>0.0.3.0</version>
+					<datetime>2012-06-29 19:07:58</datetime>
+					<description>* Improved interface labels and access to menus and blocks.
+* added second status bar for future use to monitor a running process</description>
+										<version>0.0.2.0</version>
+					<datetime>2012-06-28 17:17:11</datetime>
+					<description>Added snapshot feature</description>
+										<version>0.0.1.0</version>
+					<datetime>2012-06-22 14:11:11</datetime>
+					<description></description>
+					</changelogs>
+		<web><![CDATA[https://icy.bioimageanalysis.org/plugin/protocols/]]></web>
+		<dependencies>					<dependency>
+						<classname>plugins.tprovoost.javadocparser.JavaDocParser</classname>
+					</dependency>	
+									<dependency>
+						<classname>plugins.stef.library.JavaCLPlugin</classname>
+					</dependency>	
+				</dependencies>						
+		<pubDate>Fri, 22 Jun 2012 12:11:11 +0100</pubDate>
+		<versionDate>Fri, 22 Jun 2012 14:11:11 +0100</versionDate>
+	</root>

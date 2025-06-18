@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?><root>
+	<!-- XML Icy Plugin -->
+					<url><![CDATA[https://icy.bioimageanalysis.org/xml-plugin/?id=66865&version=1.2.0.0]]></url>
+		<name>Apache Commons Logging</name>
+		<version>1.2.0.0</version>
+		<required_kernel_version>1.9.0.0</required_kernel_version>
+		<kernel_ver>1.9.0.0</kernel_ver>
+		<jar_url><![CDATA[https://icy.bioimageanalysis.org/download-file/?id=66867]]></jar_url>
+		<icon_url><![CDATA[https://icy.bioimageanalysis.org/wp-content/uploads/2019/08/apache_big-2.png]]></icon_url>
+		<image_url><![CDATA[https://icy.bioimageanalysis.org/wp-content/uploads/2019/08/apache_big-2.png]]></image_url>
+		<description><![CDATA[The Apache Commons Logging Library.
+https://commons.apache.org/proper/commons-logging/
+Distributed on the Apache License, Version 2.0]]></description>
+		<classname><![CDATA[plugins.stef.library.apache.ApacheCommonsLoggingPlugin]]></classname>
+				<author><![CDATA[stef – Stephane Dallongeville]]></author>
+		<authorlist>									
+	        				       					        
+		    	  
+			    <author><![CDATA[stef – Stephane Dallongeville]]></author>
+		    					            				            
+        </authorlist>
+        		<changelog><![CDATA[-
+Version 1.2.0.0
+Date 2019-08-01 15:00:00
+
+Initial release
+
+]]></changelog>
+		<changelogs>					<version>1.2.0.0</version>
+					<datetime>2019-08-01 15:00:00</datetime>
+					<description>Initial release</description>
+					</changelogs>
+		<web><![CDATA[https://icy.bioimageanalysis.org/plugin/apache-commons-logging/]]></web>
+		<dependencies></dependencies>						
+		<pubDate>Thu, 01 Aug 2019 13:04:18 +0100</pubDate>
+		<versionDate>Thu, 01 Aug 2019 15:00:00 +0100</versionDate>
+	</root>

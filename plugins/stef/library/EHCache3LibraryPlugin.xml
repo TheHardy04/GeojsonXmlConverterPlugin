@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?><root>
+	<!-- XML Icy Plugin -->
+					<url><![CDATA[https://icy.bioimageanalysis.org/xml-plugin/?id=88914&version=3.10.0.0]]></url>
+		<name>EHCache 3 for Icy</name>
+		<version>3.10.0.0</version>
+		<required_kernel_version>2.1.0.0</required_kernel_version>
+		<kernel_ver>2.1.0.0</kernel_ver>
+		<jar_url><![CDATA[https://icy.bioimageanalysis.org/download-file/?id=88915]]></jar_url>
+		<icon_url><![CDATA[]]></icon_url>
+		<image_url><![CDATA[]]></image_url>
+		<description><![CDATA[EHCache 3 cache engine for Icy]]></description>
+		<classname><![CDATA[plugins.stef.library.EHCache3LibraryPlugin]]></classname>
+				<author><![CDATA[stef – Stephane Dallongeville]]></author>
+		<authorlist>									
+	        				       					        
+		    	  
+			    <author><![CDATA[stef – Stephane Dallongeville]]></author>
+		    					            				            
+        </authorlist>
+        		<changelog><![CDATA[-
+Version 3.10.0.0
+Date 2022-06-02 12:00:00
+
+Initial release
+
+]]></changelog>
+		<changelogs>					<version>3.10.0.0</version>
+					<datetime>2022-06-02 12:00:00</datetime>
+					<description>Initial release</description>
+					</changelogs>
+		<web><![CDATA[https://icy.bioimageanalysis.org/plugin/ehcache-3-for-icy/]]></web>
+		<dependencies></dependencies>						
+		<pubDate>Thu, 02 Jun 2022 10:30:17 +0100</pubDate>
+		<versionDate>Thu, 02 Jun 2022 12:00:00 +0100</versionDate>
+	</root>

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?><root>
+	<!-- XML Icy Plugin -->
+					<url><![CDATA[https://icy.bioimageanalysis.org/xml-plugin/?id=63076&version=0.1.1.3]]></url>
+		<name>BlockVars</name>
+		<version>0.1.1.3</version>
+		<required_kernel_version>0.0.0.0</required_kernel_version>
+		<kernel_ver>0.0.0.0</kernel_ver>
+		<jar_url><![CDATA[https://icy.bioimageanalysis.org/download-file/?id=76975]]></jar_url>
+		<icon_url><![CDATA[https://icy.bioimageanalysis.org/wp-content/uploads/2019/04/icon-BlockVars.png]]></icon_url>
+		<image_url><![CDATA[https://icy.bioimageanalysis.org/wp-content/uploads/2019/04/tooltip-BlockVars.png]]></image_url>
+		<description><![CDATA[This plugin library offers vars useful when working with Protocols. Examples are:
+&#8211; VarDimension: allows to specify an integer dimension.
+&#8211; VarPoint: allows to specify an integer point.
+&#8211; VarRectangle: allows to specify a rectangle with integer coordinates and dimensions.
+Also, different blocks have been made available to use this variables:
+&#8211; Define Point
+&#8211; Define Dimension
+&#8211; Define Rectangle (by point and dimension)
+&#8211; Define Rectangle 2 (by 4 integer properties)]]></description>
+		<classname><![CDATA[plugins.danyfel80.var.BlockVars]]></classname>
+				<author><![CDATA[danyfel80 – Daniel Felipe González Obando]]></author>
+		<authorlist>									
+	        				       					        
+		    	  
+			    <author><![CDATA[danyfel80 – Daniel Felipe González Obando]]></author>
+		    					            				            
+        </authorlist>
+        		<changelog><![CDATA[-
+Version 0.1.1.3
+Date 2020-05-13 15:13:00
+
+Fixed inverse Height Width in defineRectangle2
+
+-
+Version 0.1.1.0
+Date 2019-01-24 11:01:31
+
+added object definers
+
+-
+Version 0.0.1.0
+Date 2019-01-23 11:23:21
+
+
+
+]]></changelog>
+		<changelogs>					<version>0.1.1.3</version>
+					<datetime>2020-05-13 15:13:00</datetime>
+					<description>Fixed inverse Height Width in defineRectangle2</description>
+										<version>0.1.1.0</version>
+					<datetime>2019-01-24 11:01:31</datetime>
+					<description>added object definers</description>
+										<version>0.0.1.0</version>
+					<datetime>2019-01-23 11:23:21</datetime>
+					<description></description>
+					</changelogs>
+		<web><![CDATA[https://icy.bioimageanalysis.org/plugin/blockvars/]]></web>
+		<dependencies>					<dependency>
+						<classname>plugins.adufour.ezplug.EzPlug</classname>
+					</dependency>	
+									<dependency>
+						<classname>plugins.adufour.protocols.Protocols</classname>
+					</dependency>	
+				</dependencies>						
+		<pubDate>Wed, 23 Jan 2019 10:23:21 +0100</pubDate>
+		<versionDate>Wed, 23 Jan 2019 11:23:21 +0100</versionDate>
+	</root>

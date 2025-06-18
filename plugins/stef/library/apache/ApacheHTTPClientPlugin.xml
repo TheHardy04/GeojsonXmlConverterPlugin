@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?><root>
+	<!-- XML Icy Plugin -->
+					<url><![CDATA[https://icy.bioimageanalysis.org/xml-plugin/?id=89062&version=4.5.13.0]]></url>
+		<name>Apache HTTP client</name>
+		<version>4.5.13.0</version>
+		<required_kernel_version>2.1.0.0</required_kernel_version>
+		<kernel_ver>2.1.0.0</kernel_ver>
+		<jar_url><![CDATA[https://icy.bioimageanalysis.org/download-file/?id=89064]]></jar_url>
+		<icon_url><![CDATA[https://icy.bioimageanalysis.org/wp-content/uploads/2022/10/apache_big.png]]></icon_url>
+		<image_url><![CDATA[https://icy.bioimageanalysis.org/wp-content/uploads/2022/10/apache_big.png]]></image_url>
+		<description><![CDATA[The Apache HTTP client Library.
+https://commons.apache.org/proper/commons-lang/
+Distributed on the Apache License, Version 2.0]]></description>
+		<classname><![CDATA[plugins.stef.library.apache.ApacheHTTPClientPlugin]]></classname>
+				<author><![CDATA[stef – Stephane Dallongeville]]></author>
+		<authorlist>									
+	        				       					        
+		    	  
+			    <author><![CDATA[stef – Stephane Dallongeville]]></author>
+		    					            				            
+        </authorlist>
+        		<changelog><![CDATA[-
+Version 4.5.14.0
+Date 2025-06-10 09:30:00
+
+Updated to Apache HTTP v4.5.14
+
+-
+Version 4.5.13.0
+Date 2022-10-25 18:00:00
+
+Initial version
+
+]]></changelog>
+		<changelogs>					<version>4.5.14.0</version>
+					<datetime>2025-06-10 09:30:00</datetime>
+					<description>Updated to Apache HTTP v4.5.14</description>
+										<version>4.5.13.0</version>
+					<datetime>2022-10-25 18:00:00</datetime>
+					<description>Initial version</description>
+					</changelogs>
+		<web><![CDATA[https://icy.bioimageanalysis.org/plugin/apache-http-client/]]></web>
+		<dependencies></dependencies>						
+		<pubDate>Tue, 25 Oct 2022 15:50:13 +0100</pubDate>
+		<versionDate>Tue, 25 Oct 2022 18:00:00 +0100</versionDate>
+	</root>

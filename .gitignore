@@ -1,0 +1,13 @@
+.idea/
+.setting/
+.settings/
+target/
+build/
+out/
+*.iml
+.classpath
+.project
+preferences/
+workspace/
+setting.xml
+**/.DS_Store

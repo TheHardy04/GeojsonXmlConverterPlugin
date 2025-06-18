@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?><root>
+	<!-- XML Icy Plugin -->
+					<url><![CDATA[https://icy.bioimageanalysis.org/xml-plugin/?id=66855&version=1.11.0.0]]></url>
+		<name>Apache Commons Codec</name>
+		<version>1.11.0.0</version>
+		<required_kernel_version>1.9.0.0</required_kernel_version>
+		<kernel_ver>1.9.0.0</kernel_ver>
+		<jar_url><![CDATA[https://icy.bioimageanalysis.org/download-file/?id=66858]]></jar_url>
+		<icon_url><![CDATA[https://icy.bioimageanalysis.org/wp-content/uploads/2019/08/apache.png]]></icon_url>
+		<image_url><![CDATA[https://icy.bioimageanalysis.org/wp-content/uploads/2019/08/apache_big.png]]></image_url>
+		<description><![CDATA[The Apache Commons Codec Library.
+Apache Commons Codec (TM) software provides implementations of common encoders and decoders such as Base64, Hex, Phonetic and URLs.
+https://commons.apache.org/proper/commons-codec/
+Distributed on the Apache License, Version 2.0]]></description>
+		<classname><![CDATA[plugins.stef.library.apache.ApacheCommonsCodecPlugin]]></classname>
+				<author><![CDATA[stef – Stephane Dallongeville]]></author>
+		<authorlist>									
+	        				       					        
+		    	  
+			    <author><![CDATA[stef – Stephane Dallongeville]]></author>
+		    					            				            
+        </authorlist>
+        		<changelog><![CDATA[-
+Version 1.16.0.0
+Date 2025-01-21 17:30:00
+
+
+
+-
+Version 1.11.0.0
+Date 2019-08-01 15:00:00
+
+Initial release
+
+]]></changelog>
+		<changelogs>					<version>1.16.0.0</version>
+					<datetime>2025-01-21 17:30:00</datetime>
+					<description></description>
+										<version>1.11.0.0</version>
+					<datetime>2019-08-01 15:00:00</datetime>
+					<description>Initial release</description>
+					</changelogs>
+		<web><![CDATA[https://icy.bioimageanalysis.org/plugin/apache-commons-codec/]]></web>
+		<dependencies></dependencies>						
+		<pubDate>Thu, 01 Aug 2019 12:55:05 +0100</pubDate>
+		<versionDate>Thu, 01 Aug 2019 15:00:00 +0100</versionDate>
+	</root>

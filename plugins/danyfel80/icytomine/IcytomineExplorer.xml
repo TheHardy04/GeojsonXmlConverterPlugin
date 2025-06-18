@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?><root>
+	<!-- XML Icy Plugin -->
+					<url><![CDATA[https://icy.bioimageanalysis.org/xml-plugin/?id=63085&version=1.0.5.0]]></url>
+		<name>Icytomine Explorer</name>
+		<version>1.0.5.0</version>
+		<required_kernel_version>2.1.0.0</required_kernel_version>
+		<kernel_ver>2.1.0.0</kernel_ver>
+		<jar_url><![CDATA[https://icy.bioimageanalysis.org/download-file/?id=89040]]></jar_url>
+		<icon_url><![CDATA[https://icy.bioimageanalysis.org/wp-content/uploads/2019/04/4722072.png]]></icon_url>
+		<image_url><![CDATA[]]></image_url>
+		<description><![CDATA[Cytomine Client
+This plugins are compatible with Cytomine version 1 servers , NOT version 2 servers.
+Available plugins:
+
+Project Explorer
+Image Viewer
+
+Available protocol blocks:
+
+Create Cytomine client
+Get Cytomine annotation
+Get Cytomine image
+Get Cytomine project
+Remove Cytomine annotation
+Send ROIs to Cytomine
+
+Available batch blocks:
+
+Cytomine annotation loop
+Cytomine annotation tiler
+Cytomine image loop
+Cytomine project loop
+
+More information on Gitlab page]]></description>
+		<classname><![CDATA[plugins.danyfel80.icytomine.IcytomineExplorer]]></classname>
+				<author><![CDATA[danyfel80 – Daniel Felipe González Obando]]></author>
+		<authorlist>									
+	        				       					        
+		    	  
+			    <author><![CDATA[danyfel80 – Daniel Felipe González Obando]]></author>
+		    				       					        
+		    	  
+			    <author><![CDATA[stef – Stephane Dallongeville]]></author>
+		    					            				            
+        </authorlist>
+        		<changelog><![CDATA[-
+Version 1.0.5.0
+Date 2022-09-23 00:00:00
+
+Optimized user annotation geometry fetch (linking geometry with user annotation)
+
+-
+Version 1.0.4.0
+Date 2022-09-22 18:00:00
+
+Fixed internal dependencies (may need more work)
+
+-
+Version 1.0.3.0
+Date 2022-09-22 12:00:00
+
+- switched to develop branch (and merged in master to avoid futures mistakes), re-introducing recent changes.
+- cleaned up pom file, dependencies
+
+-
+Version 1.0.2.0
+Date 2022-08-24 15:00:00
+
+Reverted to java client version 2.2.20 (2.3.0 has issue retrieving with pixel size information)
+
+-
+Version 1.0.1.0
+Date 2022-02-15 17:00:00
+
+Updated to last version, fixed missing dependencies.
+
+-
+Version 1.0.0.0
+Date 2021-02-10 09:32:24
+
+Unified client and batch plugins. Batch should be uninstalled for this plugin to work.
+Mavenized project and fix exception when opening the plugin
+
+-
+Version 0.0.1.0
+Date 2019-04-16 17:17:27
+
+
+
+]]></changelog>
+		<changelogs>					<version>1.0.5.0</version>
+					<datetime>2022-09-23 00:00:00</datetime>
+					<description>Optimized user annotation geometry fetch (linking geometry with user annotation)</description>
+										<version>1.0.4.0</version>
+					<datetime>2022-09-22 18:00:00</datetime>
+					<description>Fixed internal dependencies (may need more work)</description>
+										<version>1.0.3.0</version>
+					<datetime>2022-09-22 12:00:00</datetime>
+					<description>- switched to develop branch (and merged in master to avoid futures mistakes), re-introducing recent changes.
+- cleaned up pom file, dependencies</description>
+										<version>1.0.2.0</version>
+					<datetime>2022-08-24 15:00:00</datetime>
+					<description>Reverted to java client version 2.2.20 (2.3.0 has issue retrieving with pixel size information)</description>
+										<version>1.0.1.0</version>
+					<datetime>2022-02-15 17:00:00</datetime>
+					<description>Updated to last version, fixed missing dependencies.</description>
+										<version>1.0.0.0</version>
+					<datetime>2021-02-10 09:32:24</datetime>
+					<description>Unified client and batch plugins. Batch should be uninstalled for this plugin to work.
+Mavenized project and fix exception when opening the plugin</description>
+										<version>0.0.1.0</version>
+					<datetime>2019-04-16 17:17:27</datetime>
+					<description></description>
+					</changelogs>
+		<web><![CDATA[https://icy.bioimageanalysis.org/plugin/icytomine-client/]]></web>
+		<dependencies>					<dependency>
+						<classname>plugins.adufour.protocols.Protocols</classname>
+					</dependency>	
+									<dependency>
+						<classname>plugins.adufour.ezplug.EzPlug</classname>
+					</dependency>	
+									<dependency>
+						<classname>plugins.danyfel80.var.BlockVars</classname>
+					</dependency>	
+									<dependency>
+						<classname>plugins.stef.library.EHCache3LibraryPlugin</classname>
+					</dependency>	
+									<dependency>
+						<classname>plugins.stef.library.apache.ApacheCommonsLangPlugin</classname>
+					</dependency>	
+									<dependency>
+						<classname>plugins.stef.library.apache.ApacheCommonsCodecPlugin</classname>
+					</dependency>	
+									<dependency>
+						<classname>plugins.stef.library.apache.ApacheCommonsCollectionsPlugin</classname>
+					</dependency>	
+									<dependency>
+						<classname>plugins.stef.library.apache.ApacheCommonsLoggingPlugin</classname>
+					</dependency>	
+									<dependency>
+						<classname>plugins.stef.library.apache.ApacheHTTPClientPlugin</classname>
+					</dependency>	
+				</dependencies>						
+		<pubDate>Tue, 16 Apr 2019 15:17:27 +0100</pubDate>
+		<versionDate>Tue, 16 Apr 2019 17:17:27 +0100</versionDate>
+	</root>

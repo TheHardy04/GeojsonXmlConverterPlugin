@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- Inherited Icy Parent POM -->
+    <parent>
+        <artifactId>pom-icy</artifactId>
+        <groupId>org.bioimageanalysis.icy</groupId>
+        <version>2.1.5</version>
+    </parent>
+
+    <!-- Project Information -->
+    <artifactId>geojson-xml-converter</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+
+    <name>GeoJSON XML Converter</name>
+    <description>Icy plugin for converting Region of Interest (RoI) files between GeoJSON and XML formats, enhancing data compatibility and workflow flexibility.</description>
+    <inceptionYear>2025</inceptionYear>
+
+    <organization>
+        <name>Institut Pasteur</name>
+        <url>https://www.pasteur.fr/fr</url>
+    </organization>
+
+    <licenses>
+        <license>
+            <name>GNU GPLv3</name>
+            <url>https://www.gnu.org/licenses/gpl-3.0.en.html</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <id>TheHardy04</id>
+            <name>Théo HARDY</name>
+            <url>https://github.com/TheHardy04</url>
+            <roles>
+                <role>founder</role>
+                <role>lead</role>
+                <role>architect</role>
+                <role>developer</role>
+                <role>debugger</role>
+                <role>tester</role>
+                <role>maintainer</role>
+                <role>support</role>
+            </roles>
+        </developer>
+    </developers>
+
+    <!-- Project properties -->
+    <properties>
+        <artifact-to-extract>JMathPlot,JMathIO,JMathArray</artifact-to-extract>
+    </properties>
+
+    <!-- List of project's dependencies -->
+    <dependencies>
+        <!-- The core of Icy -->
+        <dependency>
+            <groupId>org.bioimageanalysis.icy</groupId>
+            <artifactId>icy-kernel</artifactId>
+            <version>2.5.1</version>
+        </dependency>
+
+        <!-- The EzPlug library, simplifies writing UI for Icy plugins. -->
+        <dependency>
+            <groupId>org.bioimageanalysis.icy</groupId>
+            <artifactId>ezplug</artifactId>
+        </dependency>
+
+        <!-- External libraries example -->
+        <dependency>
+            <groupId>com.github.yannrichet</groupId>
+            <artifactId>JMathPlot</artifactId>
+            <version>1.0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.yannrichet</groupId>
+            <artifactId>JMathIO</artifactId>
+            <version>1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.yannrichet</groupId>
+            <artifactId>JMathArray</artifactId>
+            <version>1.0</version>
+        </dependency>
+        <!-- Gson for JSON processing -->
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.8.9</version>
+        </dependency>
+        <!-- JAXB for XML processing -->
+        <dependency>
+            <groupId>com.sun.xml.bind</groupId>
+            <artifactId>jaxb-impl</artifactId>
+            <version>4.0.2</version>
+            <scope>runtime</scope>
+        </dependency>
+    </dependencies>
+
+    <!-- Icy Maven repository (to find parent POM) -->
+    <repositories>
+        <repository>
+            <id>icy</id>
+            <name>Icy's Nexus</name>
+            <url>https://icy-nexus.pasteur.fr/repository/Icy/</url>
+        </repository>
+    </repositories>
+</project>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?><root>
+	<!-- XML Icy Plugin -->
+					<url><![CDATA[https://icy.bioimageanalysis.org/xml-plugin/?id=75986&version=1.0.6.1]]></url>
+		<name>JavaCL library for Icy</name>
+		<version>1.0.6.1</version>
+		<required_kernel_version>2.0.0.0</required_kernel_version>
+		<kernel_ver>2.0.0.0</kernel_ver>
+		<jar_url><![CDATA[https://icy.bioimageanalysis.org/download-file/?id=75987]]></jar_url>
+		<icon_url><![CDATA[https://icy.bioimageanalysis.org/wp-content/uploads/2020/03/OpenCL-logo-1.png]]></icon_url>
+		<image_url><![CDATA[]]></image_url>
+		<description><![CDATA[JavaCL library for Icy]]></description>
+		<classname><![CDATA[plugins.stef.library.JavaCLPlugin]]></classname>
+				<author><![CDATA[stef – Stephane Dallongeville]]></author>
+		<authorlist>									
+	        				       					        
+		    	  
+			    <author><![CDATA[stef – Stephane Dallongeville]]></author>
+		    					            				            
+        </authorlist>
+        		<changelog><![CDATA[-
+Version 1.1.0.0
+Date 2024-05-27 13:00:00
+
+Removed JNA dependency (conflict with other versions of JNA)
+
+-
+Version 1.0.6.1
+Date 2020-03-11 12:50:00
+
+Initial version.
+JavaCL library has been removed from Icy kernel so all plugins using it should now add this plugin as dependency.
+
+]]></changelog>
+		<changelogs>					<version>1.1.0.0</version>
+					<datetime>2024-05-27 13:00:00</datetime>
+					<description>Removed JNA dependency (conflict with other versions of JNA)</description>
+										<version>1.0.6.1</version>
+					<datetime>2020-03-11 12:50:00</datetime>
+					<description>Initial version.
+JavaCL library has been removed from Icy kernel so all plugins using it should now add this plugin as dependency.</description>
+					</changelogs>
+		<web><![CDATA[https://icy.bioimageanalysis.org/plugin/javacl-library-for-icy/]]></web>
+		<dependencies></dependencies>						
+		<pubDate>Wed, 11 Mar 2020 11:51:11 +0100</pubDate>
+		<versionDate>Wed, 11 Mar 2020 12:50:00 +0100</versionDate>
+	</root>

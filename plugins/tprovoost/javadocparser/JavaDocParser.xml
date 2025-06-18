@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?><root>
+	<!-- XML Icy Plugin -->
+					<url><![CDATA[https://icy.bioimageanalysis.org/xml-plugin/?id=580&version=0.0.1.1]]></url>
+		<name>JavaDoc Parser</name>
+		<version>0.0.1.1</version>
+		<required_kernel_version>0.0.0.0</required_kernel_version>
+		<kernel_ver>0.0.0.0</kernel_ver>
+		<jar_url><![CDATA[https://icy.bioimageanalysis.org/download-file/?id=13610]]></jar_url>
+		<icon_url><![CDATA[]]></icon_url>
+		<image_url><![CDATA[]]></image_url>
+		<description><![CDATA[A tool to parse the javadoc of a file.
+Mostly used now by the Script Editor.]]></description>
+		<classname><![CDATA[plugins.tprovoost.javadocparser.JavaDocParser]]></classname>
+				<author><![CDATA[tprovoost – Thomas Provoost]]></author>
+		<authorlist>									
+	        				       					        
+		    	  
+			    <author><![CDATA[tprovoost – Thomas Provoost]]></author>
+		    				       					        
+		    	  
+			    <author><![CDATA[tlecomte – Timothée Lecomte]]></author>
+		    				       					        
+		    	  
+			    <author><![CDATA[stef – Stephane Dallongeville]]></author>
+		    					            				            
+        </authorlist>
+        		<changelog><![CDATA[-
+Version 0.0.1.1
+Date 2014-06-05 12:07:04
+
+Updated to last library version.
+
+-
+Version 0.0.1.0
+Date 2013-02-25 16:35:19
+
+
+
+]]></changelog>
+		<changelogs>					<version>0.0.1.1</version>
+					<datetime>2014-06-05 12:07:04</datetime>
+					<description>Updated to last library version.</description>
+										<version>0.0.1.0</version>
+					<datetime>2013-02-25 16:35:19</datetime>
+					<description></description>
+					</changelogs>
+		<web><![CDATA[https://icy.bioimageanalysis.org/plugin/javadoc-parser/]]></web>
+		<dependencies></dependencies>						
+		<pubDate>Mon, 25 Feb 2013 15:35:19 +0100</pubDate>
+		<versionDate>Mon, 25 Feb 2013 16:35:19 +0100</versionDate>
+	</root>
