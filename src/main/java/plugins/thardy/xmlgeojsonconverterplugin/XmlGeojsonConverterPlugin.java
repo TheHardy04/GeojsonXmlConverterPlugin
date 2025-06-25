@@ -29,13 +29,18 @@ public class XmlGeojsonConverterPlugin extends EzPlug {
 
     private final EzVarText outputName = new EzVarText("Output File Name");
 
+    private final EzVarBoolean includeMetadata = new EzVarBoolean("Include Metadata", true);
+
     final EzLabel text = new EzLabel("Choose a file to convert", Color.BLACK);
+
+
 
     @Override
     protected void initialize() {
         addEzComponent(mode);
         addEzComponent(inputFile);
         addEzComponent(outputName);
+        addEzComponent(includeMetadata);
         addEzComponent(text);
     }
 
@@ -45,6 +50,7 @@ public class XmlGeojsonConverterPlugin extends EzPlug {
         File inFile = inputFile.getValue();
         String outName = outputName.getValue();
         Mode selectedMode = mode.getValue();
+        boolean includeMeta = includeMetadata.getValue();
 
         if (inFile == null || !inFile.exists()) {
             text.setText("Input file is missing or does not exist.");
@@ -99,12 +105,12 @@ public class XmlGeojsonConverterPlugin extends EzPlug {
         try {
             if (selectedMode == Mode.XML_TO_GEOJSON) {
                 text.setText("Converting XML to GeoJSON...");
-                ImageDataConverter.xmlToGeoJsonFile(inFile.getPath(), outName);
+                ImageDataConverter.xmlToGeoJsonFile(inFile.getPath(), outName, includeMeta);
                 success = true;
                 message = "XML to GeoJSON conversion successful.\n Output: " + outName;
             } else if (selectedMode == Mode.GEOJSON_TO_XML) {
                 text.setText("Converting GeoJSON to XML...");
-                ImageDataConverter.geoJsonToXmlFile(inFile.getPath(), outName);
+                ImageDataConverter.geoJsonToXmlFile(inFile.getPath(), outName, includeMeta);
                 success = true;
                 message = "GeoJSON to XML conversion successful.\n Output: " + outName;
             } else {

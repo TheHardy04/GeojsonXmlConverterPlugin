@@ -43,37 +43,65 @@ public class ImageDataConverter {
      *
      * @param inputXmlFilePath      the path to the input XML file
      * @param outputGeoJsonFilePath the path to the output GeoJSON file
-     * @throws IOException if an I/O error occurs during file operations
+     * @param includeMetadata       whether to include metadata in the conversion
+     * @throws IOException          if an I/O error occurs during file operations
      */
-    public static void xmlToGeoJsonFile(String inputXmlFilePath, String outputGeoJsonFilePath) throws IOException {
+    public static void xmlToGeoJsonFile(String inputXmlFilePath, String outputGeoJsonFilePath, boolean includeMetadata) throws IOException {
         // Load the XML image data from the file
         XmlImageData xmlImageData = XmlImageData.fromXml(inputXmlFilePath);
 
         // Convert the XML image data to GeoJSON format
-        GeoJsonImageData geoJsonImageData = xmlToGeoJson(xmlImageData);
+        GeoJsonImageData geoJsonImageData = xmlToGeoJson(xmlImageData, includeMetadata);
 
         // Save the converted GeoJSON data to a file
         geoJsonImageData.toJsonFile(outputGeoJsonFilePath);
     }
 
     /**
+     * Converts an XML file containing image data to a GeoJSON file with metadata included.
+     *
+     * @param inputXmlFilePath      the path to the input XML file
+     * @param outputGeoJsonFilePath the path to the output GeoJSON file
+     * @throws IOException          if an I/O error occurs during file operations
+     */
+    public static void xmlToGeoJsonFile(String inputXmlFilePath, String outputGeoJsonFilePath) throws IOException {
+        // Default to include metadata
+        xmlToGeoJsonFile(inputXmlFilePath, outputGeoJsonFilePath, true);
+    }
+
+    /**
      * Converts a GeoJSON file containing image data to an XML file.
      *
      * @param inputGeoJsonFilePath  the path to the input GeoJSON file
-     * @param outputXmlFilePath the path to the output XML file
-     * @throws IOException if an I/O error occurs during file operations
+     * @param outputXmlFilePath     the path to the output XML file
+     * @param includeMetadata       whether to include metadata in the conversion
+     * @throws IOException                  if an I/O error occurs during file operations
      * @throws ParserConfigurationException if a parser configuration error occurs
-     * @throws TransformerException if a transformation error occurs
+     * @throws TransformerException         if a transformation error occurs
      */
-    public static void geoJsonToXmlFile(String inputGeoJsonFilePath, String outputXmlFilePath) throws IOException, ParserConfigurationException, TransformerException {
+    public static void geoJsonToXmlFile(String inputGeoJsonFilePath, String outputXmlFilePath, boolean includeMetadata) throws IOException, ParserConfigurationException, TransformerException {
         // Load the GeoJSON image data from the file
         GeoJsonImageData geoJsonImageData = GeoJsonImageData.fromJsonFile(inputGeoJsonFilePath);
 
         // Convert the GeoJSON image data to XML format
-        XmlImageData xmlImageData = geoJsonToXml(geoJsonImageData);
+        XmlImageData xmlImageData = geoJsonToXml(geoJsonImageData, includeMetadata);
 
         // Save the converted XML data to a file
         xmlImageData.toXmlFile(outputXmlFilePath);
+    }
+
+    /**
+     * Converts a GeoJSON file containing image data to an XML file with metadata included.
+     *
+     * @param inputGeoJsonFilePath  the path to the input GeoJSON file
+     * @param outputXmlFilePath     the path to the output XML file
+     * @throws IOException                  if an I/O error occurs during file operations
+     * @throws ParserConfigurationException if a parser configuration error occurs
+     * @throws TransformerException         if a transformation error occurs
+     */
+    public static void geoJsonToXmlFile(String inputGeoJsonFilePath, String outputXmlFilePath) throws IOException, ParserConfigurationException, TransformerException {
+        // Default to include metadata
+        geoJsonToXmlFile(inputGeoJsonFilePath, outputXmlFilePath, true);
     }
 
 
@@ -83,15 +111,21 @@ public class ImageDataConverter {
      * @param xmlImageData the XmlImageData object to convert
      * @return a GeoJsonImageData object representing the same data
      */
-    public static GeoJsonImageData xmlToGeoJson(XmlImageData xmlImageData) {
+    public static GeoJsonImageData xmlToGeoJson(XmlImageData xmlImageData, boolean includeMetadata) {
         GeoJsonImageData geoJsonImageData = new GeoJsonImageData();
 
         // Type is always FeatureCollection
         geoJsonImageData.setType("FeatureCollection");
 
         // METADATA
-        GeoJsonImageData.Metadata metadata = xmlToGeoJsonMetadata(xmlImageData);
-        geoJsonImageData.setMetadata(metadata);
+        if (includeMetadata) {
+            // Convert the metadata from XmlImageData to GeoJsonImageData
+            GeoJsonImageData.Metadata metadata = xmlToGeoJsonMetadata(xmlImageData);
+            geoJsonImageData.setMetadata(metadata);
+        } else {
+            // If metadata is not included, set it to null
+            geoJsonImageData.setMetadata(null);
+        }
 
         // Features
         List<GeoJsonImageData.Feature> features = new ArrayList<>();
@@ -103,6 +137,11 @@ public class ImageDataConverter {
         geoJsonImageData.setFeatures(features);
 
         return geoJsonImageData;
+    }
+
+    public static GeoJsonImageData xmlToGeoJson(XmlImageData xmlImageData) {
+        // Default to include metadata
+        return xmlToGeoJson(xmlImageData, true);
     }
 
     private static GeoJsonImageData.Metadata xmlToGeoJsonMetadata(XmlImageData xmlImageData) {
@@ -204,9 +243,10 @@ public class ImageDataConverter {
      * Converts a GeoJsonImageData object to an XmlImageData object.
      *
      * @param geoJsonImageData the GeoJsonImageData object to convert
+     * @param includeMetadata whether to include metadata in the conversion
      * @return an XmlImageData object representing the same data
      */
-    public static XmlImageData geoJsonToXml(GeoJsonImageData geoJsonImageData) {
+    public static XmlImageData geoJsonToXml(GeoJsonImageData geoJsonImageData, boolean includeMetadata) {
         XmlImageData xmlImageData = new XmlImageData();
 
         // NAME if available
@@ -214,9 +254,14 @@ public class ImageDataConverter {
             xmlImageData.setName(geoJsonImageData.getMetadata().getFilename());
         }
 
-        // Set the METADATA 
-        XmlImageData.Meta meta = getMeta(geoJsonImageData);
-        xmlImageData.setMeta(meta);
+        // Set the METADATA
+        if (includeMetadata) {
+            XmlImageData.Meta meta = getMeta(geoJsonImageData);
+            xmlImageData.setMeta(meta);
+        } else {
+            // If metadata is not included, set it to null
+            xmlImageData.setMeta(null);
+        }
 
         // Convert features to ROIs
         List<XmlImageData.Roi> rois = new ArrayList<>();
@@ -227,8 +272,17 @@ public class ImageDataConverter {
         xmlImageData.setRois(rois);
 
         return xmlImageData;
+    }
 
-
+    /**
+     * Converts a GeoJsonImageData object to an XmlImageData object with metadata included.
+     *
+     * @param geoJsonImageData the GeoJsonImageData object to convert
+     * @return an XmlImageData object representing the same data with metadata included
+     */
+    public static XmlImageData geoJsonToXml(GeoJsonImageData geoJsonImageData) {
+        // Default to include metadata
+        return geoJsonToXml(geoJsonImageData, true);
     }
 
     private static XmlImageData.Meta getMeta(GeoJsonImageData geoJsonImageData) {
