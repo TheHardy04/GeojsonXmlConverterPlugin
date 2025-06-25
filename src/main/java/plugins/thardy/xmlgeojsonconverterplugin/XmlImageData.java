@@ -136,7 +136,7 @@ public class XmlImageData {
         // If meta exists add <rois> element
         // It not just add the <roi> elements
         if (this.rois != null && !this.rois.isEmpty()) {
-            if(this.meta != null)
+            if(this.meta == null)
             {
                 for(Roi roi : this.rois) {
                     rootElement.appendChild(roi.toXmlElement(doc));
