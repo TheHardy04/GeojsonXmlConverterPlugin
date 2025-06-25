@@ -133,11 +133,21 @@ public class XmlImageData {
         }
 
         // <rois> element
+        // If meta exists add <rois> element
+        // It not just add the <roi> elements
         if (this.rois != null && !this.rois.isEmpty()) {
-            Element roisElement = doc.createElement("rois");
-            rootElement.appendChild(roisElement);
-            for (Roi roi : this.rois) {
-                roisElement.appendChild(roi.toXmlElement(doc));
+            if(this.meta != null)
+            {
+                for(Roi roi : this.rois) {
+                    rootElement.appendChild(roi.toXmlElement(doc));
+                }
+            }
+            else {
+                Element roisElement = doc.createElement("rois");
+                rootElement.appendChild(roisElement);
+                for (Roi roi : this.rois) {
+                    roisElement.appendChild(roi.toXmlElement(doc));
+                }
             }
         }
 
