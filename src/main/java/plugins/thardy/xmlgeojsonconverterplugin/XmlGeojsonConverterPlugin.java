@@ -33,8 +33,6 @@ public class XmlGeojsonConverterPlugin extends EzPlug {
 
     final EzLabel text = new EzLabel("Choose a file to convert", Color.BLACK);
 
-
-
     @Override
     protected void initialize() {
         addEzComponent(mode);
