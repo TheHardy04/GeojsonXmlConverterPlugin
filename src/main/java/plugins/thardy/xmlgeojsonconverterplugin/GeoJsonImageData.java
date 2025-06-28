@@ -1,5 +1,6 @@
 package plugins.thardy.xmlgeojsonconverterplugin;
 
+import com.google.api.client.json.Json;
 import com.google.gson.*;
 
 import java.io.FileReader;
@@ -17,12 +18,10 @@ import java.util.Objects;
  * @author thardy
  */
 
-
 public class GeoJsonImageData {
     private String type;
     private Metadata metadata;
     private List<Feature> features;
-
 
     public String getType() {
         return type;
@@ -46,6 +45,7 @@ public class GeoJsonImageData {
         this.features = features;
     }
 
+    //region utility methods
     static String indent(int lvl)
     {
         StringBuilder sb = new StringBuilder();
@@ -104,203 +104,9 @@ public class GeoJsonImageData {
         }
         return sb.toString();
     }
+    //endregion
 
-    /**
-     * Writes the GeoJsonImageData object to a GeoJSON file.
-     *
-     * @param filePath the path to the GeoJSON file to be created/overwritten.
-     * @throws IOException if an error occurs while writing the file.
-     */
-    public void toJsonFile(String filePath) throws IOException {
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        try (FileWriter writer = new FileWriter(filePath)) {
-            gson.toJson(this.toJsonObject(), writer);
-        }
-    }
-
-    /**
-     * Converts the GeoJsonImageData object to a JsonObject.
-     *
-     * @return a JsonObject representation of this GeoJsonImageData.
-     */
-    public JsonObject toJsonObject() {
-        JsonObject geoJsonRoot = new JsonObject();
-        if (this.type != null) {
-            geoJsonRoot.addProperty("type", this.type);
-        }
-
-        if (this.metadata != null) {
-            geoJsonRoot.add("metadata", this.metadata.toJsonObject());
-        }
-
-        if (this.features != null && !this.features.isEmpty()) {
-            JsonArray featuresArray = new JsonArray();
-            for (Feature feature : this.features) {
-                featuresArray.add(feature.toJsonObject());
-            }
-            geoJsonRoot.add("features", featuresArray);
-        }
-        return geoJsonRoot;
-    }
-
-    /**
-     * Reads a GeoJSON file and returns a GeoJson object.
-     *
-     * @param filePath the path to the GeoJSON file
-     * @return a GeoJson object containing the parsed data
-     * @throws IOException if an error occurs while reading the file
-     */
-    public static GeoJsonImageData fromJsonFile(String filePath) throws IOException {
-        try (FileReader reader = new FileReader(filePath)) {
-            // Parse the JSON file
-            JsonObject jsonObject = JsonParser.parseReader(reader).getAsJsonObject();
-
-            // Create our GeoJson object
-            GeoJsonImageData geoJsonImageData = new GeoJsonImageData();
-
-            // Extract and set the type
-            if (jsonObject.has("type")) {
-                geoJsonImageData.setType(jsonObject.get("type").getAsString());
-            }
-
-            // Extract and set the metadata if it exists
-            if (jsonObject.has("metadata")) {
-                JsonObject metadataJson = jsonObject.getAsJsonObject("metadata");
-                Metadata metadata = new Metadata();
-
-                // Set filename if it exists
-                if (metadataJson.has("filename")) {
-                    metadata.setFilename(metadataJson.get("filename").getAsString());
-                }
-
-                // Set mpp if it exists
-                if (metadataJson.has("mpp")) {
-                    JsonObject mppJson = metadataJson.getAsJsonObject("mpp");
-                    Mpp mpp = new Mpp();
-
-                    if (mppJson.has("x")) {
-                        mpp.setX(mppJson.get("x").getAsDouble());
-                    }
-                    if (mppJson.has("y")) {
-                        mpp.setY(mppJson.get("y").getAsDouble());
-                    }
-
-                    metadata.setMpp(mpp);
-                }
-
-                // Set dimensions if they exist
-                if (metadataJson.has("dimensions")) {
-                    JsonArray dimensionsArray = metadataJson.getAsJsonArray("dimensions");
-                    List<Integer> dimensions = new ArrayList<>();
-                    for (JsonElement element : dimensionsArray) {
-                        if (element.isJsonPrimitive() && element.getAsJsonPrimitive().isNumber()) {
-                            dimensions.add(element.getAsInt());
-                        } else {
-                            System.err.println("Invalid dimension value: " + element);
-                        }
-                    }
-                    metadata.setDimensions(dimensions);
-                }
-
-                geoJsonImageData.setMetadata(metadata);
-
-
-            }
-
-            // Extract and set the features if they exist
-            if(jsonObject.has("features")) {
-                // The features are stored in a JsonArray
-                JsonArray featuresArray = jsonObject.getAsJsonArray("features");
-                List<Feature> featuresList = new ArrayList<>();
-
-                // We loop through the all the features in the array
-                for(int i = 0; i < featuresArray.size(); i++){
-                    System.out.println("Processing feature " + i);
-
-                    JsonObject featureJson = featuresArray.get(i).getAsJsonObject();
-                    Feature feature = new Feature();
-
-                    // Set the type of the feature
-                    if (featureJson.has("type")) {
-                        feature.setType(featureJson.get("type").getAsString());
-                    }
-
-                    // Set the id of the feature
-                    if (featureJson.has("id")) {
-                        feature.setId(featureJson.get("id").getAsString());
-                    }
-
-                    // Set the geometry of the feature
-                    if (featureJson.has("geometry")) {
-                        JsonObject geometryJson = featureJson.getAsJsonObject("geometry");
-                        Geometry geometry = new Geometry();
-
-                        if (geometryJson.has("type")) {
-                            geometry.setType(geometryJson.get("type").getAsString());
-                        }
-                        if (geometryJson.has("coordinates")) {
-                            geometry.getCoordinatesArraysFromJsonArray(geometryJson.get("coordinates").getAsJsonArray());
-                        }
-
-                        feature.setGeometry(geometry);
-                    }
-
-                    // Set properties of the feature
-                    if (featureJson.has("properties")) {
-                        JsonObject propertiesJson = featureJson.getAsJsonObject("properties");
-                        Properties properties = new Properties();
-
-                        // Set color if it exists
-                        if (propertiesJson.has("color")) {
-                            JsonArray colorJson = propertiesJson.getAsJsonArray("color");
-                            Color color = new Color(
-                                    colorJson.get(0).getAsInt(),
-                                    colorJson.get(1).getAsInt(),
-                                    colorJson.get(2).getAsInt()
-                            );
-                            properties.setColor(color);
-                        }
-
-                        // Set isLocked if it exists
-                        if (propertiesJson.has("isLocked")) {
-                            properties.setLocked(propertiesJson.get("isLocked").getAsBoolean());
-                        }
-
-                        // Set objectType if it exists
-                        if (propertiesJson.has("objectType")) {
-                            properties.setObjectType(propertiesJson.get("objectType").getAsString());
-                        }
-
-                        // Set classification if it exists
-                        if (propertiesJson.has("classification")) {
-                            JsonObject classificationJson = propertiesJson.getAsJsonObject("classification");
-                            Classification classification = new Classification(
-                                    classificationJson.get("name").getAsString(),
-                                    new Color(
-                                            classificationJson.getAsJsonArray("color").get(0).getAsInt(),
-                                            classificationJson.getAsJsonArray("color").get(1).getAsInt(),
-                                            classificationJson.getAsJsonArray("color").get(2).getAsInt()
-                                    )
-                            );
-                            properties.setClassification(classification);
-                        }
-
-                        // Set the properties to the feature
-                        feature.setProperties(properties);
-                    }
-
-                    // Add the feature to the list
-                    featuresList.add(feature);
-                }
-                // Set the features to the GeoJson object
-                geoJsonImageData.setFeatures(featuresList);
-
-            }
-
-            return geoJsonImageData;
-        }
-    }
-
+    //region Geojson components
     public static class Metadata {
         private String filename;
         private Mpp mpp;
@@ -330,6 +136,36 @@ public class GeoJsonImageData {
             this.dimensions = dimensions;
         }
 
+        public Metadata() {}
+
+        public Metadata(JsonObject metadataJson) {
+            // Set filename if it exists
+            if (metadataJson.has("filename")) {
+                setFilename(metadataJson.get("filename").getAsString());
+            }
+
+            // Set mpp if it exists
+            if (metadataJson.has("mpp")) {
+                JsonObject mppJson = metadataJson.getAsJsonObject("mpp");
+                Mpp mpp = new Mpp(mppJson);
+                setMpp(mpp);
+            }
+
+            // Set dimensions if they exist
+            if (metadataJson.has("dimensions")) {
+                JsonArray dimensionsArray = metadataJson.getAsJsonArray("dimensions");
+                List<Integer> dimensions = new ArrayList<>();
+                for (JsonElement element : dimensionsArray) {
+                    if (element.isJsonPrimitive() && element.getAsJsonPrimitive().isNumber()) {
+                        dimensions.add(element.getAsInt());
+                    } else {
+                        System.err.println("Invalid dimension value: " + element);
+                    }
+                }
+                setDimensions(dimensions);
+            }
+        }
+
         @Override
         public String toString() {
             StringBuilder metadataString = new StringBuilder("Metadata : \n");
@@ -350,6 +186,8 @@ public class GeoJsonImageData {
             }
             return metadataString.toString();
         }
+
+
 
         /**
          * Converts the Metadata object to a JsonObject.
@@ -394,6 +232,26 @@ public class GeoJsonImageData {
             this.y = y;
         }
 
+        public Mpp() {
+            this.x = 0;
+            this.y = 0;
+        }
+
+        public Mpp(double x, double y) {
+            this.x = x;
+            this.y = y;
+        }
+
+        public Mpp(JsonObject mppJson)
+        {
+            if (mppJson.has("x")) {
+                setX(mppJson.get("x").getAsDouble());
+            }
+            if (mppJson.has("y")) {
+                setY(mppJson.get("y").getAsDouble());
+            }
+        }
+
         @Override
         public String toString() {
             String mppString;
@@ -423,6 +281,32 @@ public class GeoJsonImageData {
         private String id;
         private Geometry geometry;
         private Properties properties;
+
+        Feature() {
+            this.type = null;
+            this.id = null;
+            this.geometry = null;
+            this.properties = null;
+        }
+
+        Feature(JsonObject featureJson) {
+            if (featureJson.has("type")) {
+                setType(featureJson.get("type").getAsString());
+            }
+            if (featureJson.has("id")) {
+                setId(featureJson.get("id").getAsString());
+            }
+            if (featureJson.has("geometry")) {
+                JsonObject geometryJson = featureJson.getAsJsonObject("geometry");
+                Geometry geometry = new Geometry(geometryJson);
+                setGeometry(geometry);
+            }
+            if (featureJson.has("properties")) {
+                JsonObject propertiesJson = featureJson.getAsJsonObject("properties");
+                Properties properties = new Properties(propertiesJson);
+                setProperties(properties);
+            }
+        }
 
         public String getType() {
             return type;
@@ -495,14 +379,37 @@ public class GeoJsonImageData {
     }
 
     public static class Geometry {
-        private String type;
-        private List<List<Coordinate>> coordinates; // For now, just holding a reference
+        private GeoJsonGeometryType type;
+        private List<Coordinate> coordinates;
+        private boolean isEllipse;
+
+        Geometry() {
+            this.type = null;
+            this.coordinates = new ArrayList<>();
+            this.isEllipse = false;
+
+        }
+
+        Geometry(JsonObject geometryJson) {
+            if (geometryJson.has("type")) {
+                setType(GeoJsonGeometryType.valueOf(geometryJson.get("type").getAsString().toUpperCase()));
+            }
+            if (geometryJson.has("coordinates")) {
+                getCoordinatesArraysFromJsonArray(geometryJson.get("coordinates").getAsJsonArray());
+            }
+            if (geometryJson.has("isEllipse")) {
+                setEllipse(geometryJson.get("isEllipse").getAsBoolean());
+            }
+        }
+
 
         // Getters and setters for Geometry
-        public String getType() { return type; }
-        public void setType(String type) { this.type = type; }
-        public List<List<Coordinate>> getCoordinates() { return coordinates; }
-        public void setCoordinates(List<List<Coordinate>> coordinates) { this.coordinates = coordinates; }
+        public GeoJsonGeometryType getType() { return type; }
+        public void setType(GeoJsonGeometryType type) { this.type = type; }
+        public List<Coordinate> getCoordinates() { return coordinates; }
+        public void setCoordinates(List<Coordinate> coordinates) { this.coordinates = coordinates; }
+        public boolean isEllipse() { return isEllipse; }
+        public void setEllipse(boolean isEllipse) { this.isEllipse = isEllipse; }
 
         /**
          * Extracts coordinates from a JsonArray and returns a list of Coordinate objects.
@@ -516,8 +423,11 @@ public class GeoJsonImageData {
             List<Coordinate> coordinateList = new ArrayList<>();
             if(coordinatesArray != null && !coordinatesArray.isEmpty()) {
 
-                // There are 3 lists nested
-                coordinatesArray = coordinatesArray.get(0).getAsJsonArray();
+                // there can be 3 lists nested
+                if(coordinatesArray.size() == 1 && coordinatesArray.get(0).isJsonArray()) {
+                    // If the first element is an array, we assume it's a Polygon or MultiPolygon
+                    coordinatesArray = coordinatesArray.get(0).getAsJsonArray();
+                }
 
                 for (JsonElement element : coordinatesArray) {
                     if (element.isJsonArray()) {
@@ -543,39 +453,39 @@ public class GeoJsonImageData {
             // Initialize the coordinates list
             this.coordinates = new ArrayList<>();
             if(coordinatesArray != null && !coordinatesArray.isEmpty()) {
-                if (Objects.equals(this.type, "Polygon"))
+                if (this.type == GeoJsonGeometryType.POLYGON)
                 {
                     // For Polygon, we expect a single array of coordinates
-                    List<Coordinate> coordList = getCoordinatesFromJsonArray(coordinatesArray);
-                    if (!coordList.isEmpty()) {
-                        this.coordinates.add(coordList);
-                    } else {
+                    this.coordinates = getCoordinatesFromJsonArray(coordinatesArray);
+                    if (this.coordinates.isEmpty()) {
                         System.err.println("No coordinates found in the Polygon element.");
                     }
                 }
-                if (Objects.equals(this.type, "MultiPolygon"))
+
+                if (this.type == GeoJsonGeometryType.LINE_STRING)
                 {
-                    // For MultiPolygon, we need to handle multiple arrays of coordinates
-                    for (JsonElement element : coordinatesArray) {
-                        if (element.isJsonArray()) {
-                            JsonArray coordTab = element.getAsJsonArray();
-                            List<Coordinate> coordList = getCoordinatesFromJsonArray(coordTab);
-                            if (!coordList.isEmpty()) {
-                                this.coordinates.add(coordList);
-                            } else {
-                                System.err.println("No coordinates found in this element: " + element);
-                            }
-                        }
+                    // For LineString, we expect a single array of coordinates
+                    this.coordinates = getCoordinatesFromJsonArray(coordinatesArray);
+                    if (this.coordinates.isEmpty()) {
+                        System.err.println("No coordinates found in the LineString element.");
                     }
                 }
-
+                if (this.type == GeoJsonGeometryType.POINT)
+                {
+                    // For Point, we expect a single coordinate
+                    if (coordinatesArray.size() == 2 && coordinatesArray.get(0).isJsonPrimitive()) {
+                        double x = coordinatesArray.get(0).getAsDouble();
+                        double y = coordinatesArray.get(1).getAsDouble();
+                        this.coordinates.add(new Coordinate(x, y));
+                    } else {
+                        System.err.println("Invalid Point format: " + coordinatesArray);
+                    }
+                }
             }
             else {
                 System.err.println("No coordinates found.");
             }
         }
-
-
 
         @Override
         public String toString() {
@@ -583,13 +493,11 @@ public class GeoJsonImageData {
             geometryString.append(indent(2)).append("Type : ").append(type).append("\n");
             if (coordinates != null && !coordinates.isEmpty()) {
                 geometryString.append(indent(2)).append("Coordinates:\n");
-                for (List<Coordinate> coordList : coordinates) {
-                    geometryString.append(indent(2));
-                    for(Coordinate coord : coordList) {
-                        geometryString.append(coord.toString()).append(", ");
-                    }
-                    geometryString.append("\n");
+                geometryString.append(indent(2));
+                for(Coordinate coord : coordinates) {
+                    geometryString.append(coord.toString()).append(", ");
                 }
+                geometryString.append("\n");
             } else {
                 geometryString.append(indent(2)).append("Coordinates: not set\n");
             }
@@ -603,42 +511,46 @@ public class GeoJsonImageData {
         public JsonObject toJsonObject() {
             JsonObject geometryJson = new JsonObject();
             if (this.type != null) {
-                geometryJson.addProperty("type", this.type);
+                geometryJson.addProperty("type", this.type.getTypeName());
             }
 
             if (this.coordinates != null && !this.coordinates.isEmpty()) {
-                JsonArray jsonCoordinatesOuterArray = new JsonArray();
+                JsonElement jsonCoordinates;
 
-                if ("Polygon".equals(this.type)) {
-                    // For Polygon: coordinates is an array of rings
-                    // this.coordinates is List<List<Coordinate>>, where each inner list is a ring
-                    for (List<Coordinate> ring : this.coordinates) {
-                        JsonArray jsonRing = new JsonArray();
-                        if (ring != null) {
-                            for (Coordinate coord : ring) {
-                                jsonRing.add(coord.toJsonArray());
-                            }
-                        }
-                        jsonCoordinatesOuterArray.add(jsonRing);
+                if (this.type == GeoJsonGeometryType.POLYGON) {
+                    // For Polygon: coordinates is an array of rings. We'll create one ring.
+                    JsonArray jsonRing = new JsonArray();
+                    for (Coordinate coord : this.coordinates) {
+                        jsonRing.add(coord.toJsonArray());
                     }
-                } else if ("MultiPolygon".equals(this.type)) {
-                    // For MultiPolygon: coordinates is an array of Polygon coordinate arrays
-                    // this.coordinates is List<List<Coordinate>>, where each inner list is an exterior ring of a polygon part
-                    for (List<Coordinate> polygonExteriorRing : this.coordinates) {
-                        JsonArray jsonPolygonRingsArray = new JsonArray(); // For a single polygon's rings
-                        JsonArray jsonRing = new JsonArray(); // The actual exterior ring
-                        if (polygonExteriorRing != null) {
-                            for (Coordinate coord : polygonExteriorRing) {
-                                jsonRing.add(coord.toJsonArray());
-                            }
-                        }
-                        jsonPolygonRingsArray.add(jsonRing); // Add the ring to this polygon part
-                        jsonCoordinatesOuterArray.add(jsonPolygonRingsArray); // Add this polygon part
+                    JsonArray polygonCoordinates = new JsonArray();
+                    polygonCoordinates.add(jsonRing);
+                    jsonCoordinates = polygonCoordinates;
+                } else if (this.type == GeoJsonGeometryType.LINE_STRING) {
+                    // For LineString: coordinates is a single array of coordinates
+                    JsonArray jsonLine = new JsonArray();
+                    for (Coordinate coord : this.coordinates) {
+                        jsonLine.add(coord.toJsonArray());
                     }
+                    jsonCoordinates = jsonLine;
+                } else if (this.type == GeoJsonGeometryType.POINT) {
+                    // For Point: coordinates is a single coordinate
+                    jsonCoordinates = this.coordinates.get(0).toJsonArray();
+                } else {
+                    // Default or unsupported types
+                    jsonCoordinates = new JsonArray();
                 }
-                // Potentially handle other geometry types here if they are supported
-                geometryJson.add("coordinates", jsonCoordinatesOuterArray);
+
+                geometryJson.add("coordinates", jsonCoordinates);
             }
+
+            // Add isEllipse
+            if (this.isEllipse) {
+                geometryJson.addProperty("isEllipse", true);
+            }
+
+
+
             return geometryJson;
         }
     }
@@ -683,6 +595,46 @@ public class GeoJsonImageData {
         private boolean isLocked;
         private String objectType;
         private Classification classification;
+
+        public Properties() {
+            this.color = null;
+            this.isLocked = false;
+            this.objectType = null;
+            this.classification = null;
+        }
+
+        public Properties(JsonObject propertiesJson) {
+            // Set color if it exists
+            if (propertiesJson.has("color")) {
+                JsonArray colorArray = propertiesJson.getAsJsonArray("color");
+                if (colorArray.size() == 3) {
+                    setColor(new Color(
+                            colorArray.get(0).getAsInt(),
+                            colorArray.get(1).getAsInt(),
+                            colorArray.get(2).getAsInt()
+                    ));
+                } else {
+                    System.err.println("Invalid color array size: " + colorArray.size());
+                }
+            }
+
+            // Set isLocked if it exists
+            if (propertiesJson.has("isLocked")) {
+                setLocked(propertiesJson.get("isLocked").getAsBoolean());
+            }
+
+            // Set objectType if it exists
+            if (propertiesJson.has("objectType")) {
+                setObjectType(propertiesJson.get("objectType").getAsString());
+            }
+
+            // Set classification if it exists
+            if (propertiesJson.has("classification")) {
+                JsonObject classificationJson = propertiesJson.getAsJsonObject("classification");
+                Classification classification = new Classification(classificationJson);
+                setClassification(classification);
+            }
+        }
 
         public Color getColor() {
             return color;
@@ -807,10 +759,37 @@ public class GeoJsonImageData {
         private String name;
         private Color color;
 
+        public Classification() {
+            this.name = null;
+            this.color = null;
+        }
+
         public Classification(String name, Color color) {
             this.name = name;
             this.color = color;
         }
+
+        public Classification(JsonObject classificationJson) {
+            // Set name if it exists
+            if (classificationJson.has("name")) {
+                setName(classificationJson.get("name").getAsString());
+            }
+
+            // Set color if it exists
+            if (classificationJson.has("color")) {
+                JsonArray colorArray = classificationJson.getAsJsonArray("color");
+                if (colorArray.size() == 3) {
+                    setColor(new Color(
+                            colorArray.get(0).getAsInt(),
+                            colorArray.get(1).getAsInt(),
+                            colorArray.get(2).getAsInt()
+                    ));
+                } else {
+                    System.err.println("Invalid color array size: " + colorArray.size());
+                }
+            }
+        }
+
 
         public String getName() {
             return name;
@@ -845,4 +824,102 @@ public class GeoJsonImageData {
             return classificationJson;
         }
     }
+    //endregion
+
+    //region From File
+    /**
+     * Reads a GeoJSON file and returns a GeoJson object.
+     *
+     * @param filePath the path to the GeoJSON file
+     * @return a GeoJson object containing the parsed data
+     * @throws IOException if an error occurs while reading the file
+     */
+    public static GeoJsonImageData fromJsonFile(String filePath) throws IOException {
+        try (FileReader reader = new FileReader(filePath)) {
+            // Parse the JSON file
+            JsonObject jsonObject = JsonParser.parseReader(reader).getAsJsonObject();
+
+            // Create our GeoJson object
+            GeoJsonImageData geoJsonImageData = new GeoJsonImageData();
+
+            // Extract and set the type
+            if (jsonObject.has("type")) {
+                geoJsonImageData.setType(jsonObject.get("type").getAsString());
+            }
+
+            // Extract and set the metadata if it exists
+            if (jsonObject.has("metadata")) {
+                JsonObject metadataJson = jsonObject.getAsJsonObject("metadata");
+                Metadata metadata = new Metadata(metadataJson);
+
+                geoJsonImageData.setMetadata(metadata);
+            }
+
+            // Extract and set the features if they exist
+            if(jsonObject.has("features")) {
+                // The features are stored in a JsonArray
+                JsonArray featuresArray = jsonObject.getAsJsonArray("features");
+                List<Feature> featuresList = new ArrayList<>();
+
+                // We loop through the all the features in the array
+                for(int i = 0; i < featuresArray.size(); i++){
+
+                    JsonObject featureJson = featuresArray.get(i).getAsJsonObject();
+                    Feature feature = new Feature(featureJson);
+
+                    // Add the feature to the list
+                    featuresList.add(feature);
+                }
+                // Set the features to the GeoJson object
+                geoJsonImageData.setFeatures(featuresList);
+
+            }
+
+            return geoJsonImageData;
+        }
+    }
+    //endregion
+
+    //region To File
+    /**
+     * Writes the GeoJsonImageData object to a GeoJSON file.
+     *
+     * @param filePath the path to the GeoJSON file to be created/overwritten.
+     * @throws IOException if an error occurs while writing the file.
+     */
+    public void toJsonFile(String filePath) throws IOException {
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        try (FileWriter writer = new FileWriter(filePath)) {
+            gson.toJson(this.toJsonObject(), writer);
+        }
+    }
+
+    /**
+     * Converts the GeoJsonImageData object to a JsonObject.
+     *
+     * @return a JsonObject representation of this GeoJsonImageData.
+     */
+    public JsonObject toJsonObject() {
+        JsonObject geoJsonRoot = new JsonObject();
+        if (this.type != null) {
+            geoJsonRoot.addProperty("type", this.type);
+        }
+
+        if (this.metadata != null) {
+            geoJsonRoot.add("metadata", this.metadata.toJsonObject());
+        }
+
+        if (this.features != null && !this.features.isEmpty()) {
+            JsonArray featuresArray = new JsonArray();
+            for (Feature feature : this.features) {
+                featuresArray.add(feature.toJsonObject());
+            }
+            geoJsonRoot.add("features", featuresArray);
+        }
+        return geoJsonRoot;
+    }
+
+    //endregion
+
+
 }

@@ -5,7 +5,6 @@ import javax.xml.transform.TransformerException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * Utility class for converting image annotation data between XML and GeoJSON formats.
@@ -149,7 +148,7 @@ public class ImageDataConverter {
         // Create a new Metadata object for GeoJsonImageData
         GeoJsonImageData.Metadata metadata = new GeoJsonImageData.Metadata();
 
-        // Get the meta data from the XML image data
+        // Get the metadata from the XML image data
         XmlImageData.Meta meta = xmlImageData.getMeta();
 
         // Set the name if available
@@ -184,31 +183,79 @@ public class ImageDataConverter {
 
         // Set the geometry
         GeoJsonImageData.Geometry geometry = new GeoJsonImageData.Geometry();
-        if (Objects.equals(roi.getClassname(), "plugins.kernel.roi.roi2d.ROI2DPolygon")) {
-            geometry.setType("Polygon");
-        } else {
-            geometry.setType("Unknown");
+        switch(roi.getClassname())
+        {
+            case RECTANGLE:
+            case POLYGON:
+            case ELLIPSE:
+                geometry.setType(GeoJsonGeometryType.POLYGON);
+                break;
+            case LINE:
+            case POLYLINE:
+                geometry.setType(GeoJsonGeometryType.LINE_STRING);
+                break;
+            case POINT:
+                geometry.setType(GeoJsonGeometryType.POINT);
+                break;
+            default:
+                // If the classname is not recognized, set it to Unknown
+                System.err.println("Unsupported ROI class: " + roi.getClassname());
+                // Can't set unknown type with enum, might need to handle differently
+                return null;
         }
 
+
         // Set the coordinates
-        List<List<GeoJsonImageData.Coordinate>> coordinates = new ArrayList<>();
         List<GeoJsonImageData.Coordinate> coordinateList = new ArrayList<>();
-        for (XmlImageData.Roi.Point point : roi.getPoints()) {
-            GeoJsonImageData.Coordinate coordinate = new GeoJsonImageData.Coordinate(point.getPos_x(), point.getPos_y());
-            coordinateList.add(coordinate);
+
+        // For Rectangle, we need to set the Polygon coordinates
+        if(roi.getClassname() == XmlRoiType.RECTANGLE)
+        {
+            if(roi.getPoints().size() < 2) {
+                System.err.println("Rectangle ROI must have 2 points.");
+                return null; // Invalid ROI, cannot convert
+            }
+            XmlImageData.Roi.Point topLeftPoint = roi.getPoints().get(0);
+            XmlImageData.Roi.Point BottomRightPoint = roi.getPoints().get(1);
+            coordinateList.add(new GeoJsonImageData.Coordinate(topLeftPoint.getPos_x(), topLeftPoint.getPos_y())); // Top Left
+            coordinateList.add(new GeoJsonImageData.Coordinate(BottomRightPoint.getPos_x(), topLeftPoint.getPos_y())); // Top Right
+            coordinateList.add(new GeoJsonImageData.Coordinate(BottomRightPoint.getPos_x(), BottomRightPoint.getPos_y())); // Bottom Right
+            coordinateList.add(new GeoJsonImageData.Coordinate(topLeftPoint.getPos_x(), BottomRightPoint.getPos_y())); // Bottom Left
         }
-        // For the GeoJSON Polygon, the first and last coordinates must be the same
-        if (!coordinateList.isEmpty()) {
-            // Ensure the first and last coordinates are the same
-            GeoJsonImageData.Coordinate firstCoordinate = coordinateList.get(0);
-            GeoJsonImageData.Coordinate lastCoordinate = coordinateList.get(coordinateList.size() - 1);
-            if (!firstCoordinate.equals(lastCoordinate)) {
-                coordinateList.add(firstCoordinate); // Close the polygon
+        else if(roi.getClassname() == XmlRoiType.ELLIPSE)
+        {
+            // For Ellipse, we need to generate points based on the two points provided
+            if(roi.getPoints().size() < 2) {
+                System.err.println("Ellipse ROI must have 2 points.");
+                return null; // Invalid ROI, cannot convert
+            }
+            // Calculate the center and radius from the two points
+            coordinateList = generateEllipsePoints(roi.getPoints().get(0), roi.getPoints().get(1), 180);
+
+            geometry.setEllipse(true);
+        }
+        else
+        {
+            for (XmlImageData.Roi.Point point : roi.getPoints()) {
+                GeoJsonImageData.Coordinate coordinate = new GeoJsonImageData.Coordinate(point.getPos_x(), point.getPos_y());
+                coordinateList.add(coordinate);
             }
         }
 
-        coordinates.add(coordinateList);
-        geometry.setCoordinates(coordinates); // Assign coordinates to geometry
+        // For the GeoJSON Polygon, the first and last coordinates must be the same
+        if(geometry.getType() == GeoJsonGeometryType.POLYGON)
+        {
+            if (!coordinateList.isEmpty()) {
+                // Ensure the first and last coordinates are the same
+                GeoJsonImageData.Coordinate firstCoordinate = coordinateList.get(0);
+                GeoJsonImageData.Coordinate lastCoordinate = coordinateList.get(coordinateList.size() - 1);
+                if (!firstCoordinate.equals(lastCoordinate)) {
+                    coordinateList.add(firstCoordinate); // Close the polygon
+                }
+            }
+        }
+        geometry.setCoordinates(coordinateList); // Assign coordinates to geometry
+
 
         // Set the geometry to the feature
         feature.setGeometry(geometry); // Assign geometry to feature
@@ -228,6 +275,28 @@ public class ImageDataConverter {
         feature.setProperties(properties);
 
         return feature;
+    }
+
+    private static List<GeoJsonImageData.Coordinate> generateEllipsePoints(XmlImageData.Roi.Point topLeft, XmlImageData.Roi.Point bottomRight, int numPoints) {
+        List<GeoJsonImageData.Coordinate> coordinates = new ArrayList<>();
+
+        // Calculate center of ellipse
+        double centerX = (topLeft.getPos_x() + bottomRight.getPos_x()) / 2.0;
+        double centerY = (topLeft.getPos_y() + bottomRight.getPos_y()) / 2.0;
+
+        // Calculate semi-axes
+        double semiAxisX = Math.abs(bottomRight.getPos_x() - topLeft.getPos_x()) / 2.0;
+        double semiAxisY = Math.abs(bottomRight.getPos_y() - topLeft.getPos_y()) / 2.0;
+
+        // Generate points around the ellipse using parametric equations
+        for (int i = 0; i < numPoints; i++) {
+            double angle = 2 * Math.PI * i / numPoints;
+            double x = centerX + semiAxisX * Math.cos(angle);
+            double y = centerY + semiAxisY * Math.sin(angle);
+            coordinates.add(new GeoJsonImageData.Coordinate(x, y));
+        }
+
+        return coordinates;
     }
 
     private static GeoJsonImageData.Color intToColor(int color) {
@@ -317,12 +386,25 @@ public class ImageDataConverter {
 
         // Set the classname
         if (feature.getGeometry() != null && feature.getGeometry().getType() != null) {
-            if (feature.getGeometry().getType().equals("Polygon")) {
-                roi.setClassname("plugins.kernel.roi.roi2d.ROI2DPolygon");
+            switch (feature.getGeometry().getType()) {
+                case POLYGON:
+                    roi.setClassname(XmlRoiType.POLYGON);
+                    break;
+                case LINE_STRING:
+                    roi.setClassname(XmlRoiType.POLYLINE);
+                    break;
+                case POINT:
+                    roi.setClassname(XmlRoiType.POINT);
+                    break;
+                default:
+                    // If the type is not recognized, set it to Unknown
+                    System.err.println("Unsupported geometry type: " + feature.getGeometry().getType());
+                    // Or handle it gracefully, maybe by skipping or setting a default
+                    return null;
             }
         } else {
-            // We do not handle other types, so we set a default value
-            roi.setClassname("Unknown");
+            System.err.println("Geometry Type not found in feature");
+            return null; // Cannot create a valid ROI without a geometry type
         }
 
         // Set the id
@@ -356,24 +438,24 @@ public class ImageDataConverter {
 
         // Set the points
         List<XmlImageData.Roi.Point> points = new ArrayList<>();
-        for (GeoJsonImageData.Coordinate coordinate : feature.getGeometry().getCoordinates().get(0)) {
+        // Iterate through the coordinates in the GeoJSON feature and convert them to XmlImageData.Roi.Point
+        // not Handling MultiPolygon for now
+        for (GeoJsonImageData.Coordinate coordinate : feature.getGeometry().getCoordinates()) {
             XmlImageData.Roi.Point point = new XmlImageData.Roi.Point(coordinate.getX(), coordinate.getY());
             points.add(point);
         }
         // For xml, we do not need to close the polygon, so we do not add the first point again
-        if (!points.isEmpty()) {
-            // Ensure the first and last points are not the same
-            XmlImageData.Roi.Point firstPoint = points.get(0);
-            XmlImageData.Roi.Point lastPoint = points.get(points.size() - 1);
-            if (firstPoint.getPos_x() == lastPoint.getPos_x() && firstPoint.getPos_y() == lastPoint.getPos_y()) {
-                points.remove(points.size() - 1); // Remove the last point if it is the same as the first
+        if(feature.getGeometry().getType() == GeoJsonGeometryType.POLYGON){
+            if (!points.isEmpty() ) {
+                // Ensure the first and last points are not the same
+                XmlImageData.Roi.Point firstPoint = points.get(0);
+                XmlImageData.Roi.Point lastPoint = points.get(points.size() - 1);
+                if (firstPoint.getPos_x() == lastPoint.getPos_x() && firstPoint.getPos_y() == lastPoint.getPos_y()) {
+                    points.remove(points.size() - 1); // Remove the last point if it is the same as the first
+                }
             }
         }
-
-
         roi.setPoints(points);
-
-
         return roi;
     }
 
@@ -382,3 +464,4 @@ public class ImageDataConverter {
         return (0xFF << 24) | (color.getR() << 16) | (color.getG() << 8) | color.getB();
     }
 }
+
