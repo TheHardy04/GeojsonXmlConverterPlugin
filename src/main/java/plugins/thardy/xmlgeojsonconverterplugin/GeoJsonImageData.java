@@ -392,7 +392,7 @@ public class GeoJsonImageData {
 
         Geometry(JsonObject geometryJson) {
             if (geometryJson.has("type")) {
-                setType(GeoJsonGeometryType.valueOf(geometryJson.get("type").getAsString().toUpperCase()));
+                setType(GeoJsonGeometryType.fromTypeName(geometryJson.get("type").getAsString()));
             }
             if (geometryJson.has("coordinates")) {
                 getCoordinatesArraysFromJsonArray(geometryJson.get("coordinates").getAsJsonArray());
