@@ -52,7 +52,7 @@
 
     <!-- Project properties -->
     <properties>
-        <artifact-to-extract>JMathPlot,JMathIO,JMathArray</artifact-to-extract>
+        <artifact-to-extract>gson, jaxb-impl</artifact-to-extract>
     </properties>
 
     <!-- List of project's dependencies -->
@@ -62,7 +62,7 @@
             <groupId>org.bioimageanalysis.icy</groupId>
             <artifactId>icy-kernel</artifactId>
             <version>2.5.1</version>
-<!--            <scope>provided</scope>-->
+            <scope>provided</scope>
         </dependency>
 
         <!-- The EzPlug library, simplifies writing UI for Icy plugins. -->
@@ -71,22 +71,7 @@
             <artifactId>ezplug</artifactId>
         </dependency>
 
-        <!-- External libraries example -->
-        <dependency>
-            <groupId>com.github.yannrichet</groupId>
-            <artifactId>JMathPlot</artifactId>
-            <version>1.0.1</version>
-        </dependency>
-        <dependency>
-            <groupId>com.github.yannrichet</groupId>
-            <artifactId>JMathIO</artifactId>
-            <version>1.0</version>
-        </dependency>
-        <dependency>
-            <groupId>com.github.yannrichet</groupId>
-            <artifactId>JMathArray</artifactId>
-            <version>1.0</version>
-        </dependency>
+
         <!-- Gson for JSON processing -->
         <dependency>
             <groupId>com.google.code.gson</groupId>
@@ -117,21 +102,12 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
-                <version>3.4.1</version>
                 <executions>
                     <execution>
                         <phase>package</phase>
                         <goals>
                             <goal>shade</goal>
                         </goals>
-                        <configuration>
-                            <createDependencyReducedPom>false</createDependencyReducedPom>
-                            <transformers>
-                                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                    <mainClass>plugins.thardy.xmlgeojsonconverterplugin.XmlGeoJsonConverterPlugin</mainClass>
-                                </transformer>
-                            </transformers>
-                        </configuration>
                     </execution>
                 </executions>
             </plugin>
